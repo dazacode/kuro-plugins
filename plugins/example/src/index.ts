@@ -207,9 +207,7 @@ export default defineSource({
 		// the player opens; unbounded it is how a plugin gets itself
 		// rate-limited on the first click. A mirror that throws is dropped —
 		// one dead mirror out of six must not cost the other five.
-		const sources = await mapConcurrent(chosen, 4, (server) =>
-			resolveServer(server, referer, ctx)
-		);
+		const sources = await mapConcurrent(chosen, 4, (server) => resolveServer(server, referer, ctx));
 
 		if (sources.length === 0) {
 			// Never an empty list. The host's fall-through walks this, and
@@ -246,7 +244,12 @@ async function resolveServer(
 	// `matchOne` throws `SourceChangedError` naming the URL if the shape moved,
 	// which is the whole difference between a fixable bug report and "black
 	// screen". `parseJson5` copes with unquoted keys and trailing commas.
-	const raw = matchOne(/window\.__PLAYER__\s*=\s*(\{[\s\S]*?\});/, html, 'the player config', server.embed);
+	const raw = matchOne(
+		/window\.__PLAYER__\s*=\s*(\{[\s\S]*?\});/,
+		html,
+		'the player config',
+		server.embed
+	);
 	const config = parseJson5<EmbedConfig>(raw, 'player config', server.embed);
 
 	const subtitles: SubtitleTrack[] = (config.subtitles ?? []).map((track, index) => ({
@@ -278,10 +281,22 @@ async function resolveServer(
 					skips: [
 						...(config.intro === undefined
 							? []
-							: [{ kind: 'intro' as const, startSeconds: config.intro[0], endSeconds: config.intro[1] }]),
+							: [
+									{
+										kind: 'intro' as const,
+										startSeconds: config.intro[0],
+										endSeconds: config.intro[1]
+									}
+								]),
 						...(config.outro === undefined
 							? []
-							: [{ kind: 'outro' as const, startSeconds: config.outro[0], endSeconds: config.outro[1] }])
+							: [
+									{
+										kind: 'outro' as const,
+										startSeconds: config.outro[0],
+										endSeconds: config.outro[1]
+									}
+								])
 					]
 				}),
 

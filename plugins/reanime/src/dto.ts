@@ -34,7 +34,9 @@ export interface TitleDto {
 }
 
 export interface CoverDto {
-	readonly extraLarge?: string | null;
+	/** snake_case on the wire. Spelling it `extraLarge` reads fine and silently
+	 *  yields undefined, which is a poster that never loads. */
+	readonly extra_large?: string | null;
 	readonly large?: string | null;
 	readonly medium?: string | null;
 }
@@ -50,10 +52,43 @@ export interface AnimeDto {
 
 export interface AnimeDetailDto extends AnimeDto {
 	readonly anilist_id?: number | null;
+	readonly mal_id?: number | null;
+	/** Highest episode number available subtitled. */
 	readonly subbed?: number | null;
+	/** Highest episode number available dubbed. */
 	readonly dubbed?: number | null;
-	readonly seasonYear?: number | null;
-	readonly episodes?: number | null;
+	readonly season?: string | null;
+	readonly season_year?: number | null;
+	readonly format?: string | null;
+	/**
+	 * Alternative names, and the single most valuable field on this type.
+	 *
+	 * The matcher compares a canonical show's titles against a source's, and
+	 * this is what lets "Sousou no Frieren" find an entry listed under
+	 * "Frieren: Beyond Journey's End". Without it, matching falls back to one
+	 * title against one title and declines far more often than it should.
+	 */
+	readonly synonyms?: readonly string[] | null;
+	readonly tags?: readonly { readonly name?: string | null }[] | null;
+	readonly duration?: number | null;
+	readonly average_score?: number | null;
+	readonly banner_image?: string | null;
+}
+
+/**
+ * There is deliberately no `episodes` field.
+ *
+ * The API does not carry a total; it carries `subbed` and `dubbed`, each the
+ * highest episode number available in that audio. The count a matcher should
+ * compare against is the larger of the two — that is what the source actually
+ * has — and inventing an `episodes` field that is always undefined would make
+ * every episode-count check silently pass.
+ */
+export function availableEpisodes(detail: AnimeDetailDto): number | undefined {
+	const subbed = detail.subbed ?? 0;
+	const dubbed = detail.dubbed ?? 0;
+	const most = Math.max(subbed, dubbed);
+	return most > 0 ? most : undefined;
 }
 
 export interface EpisodeListDto {

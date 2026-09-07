@@ -1,25 +1,25 @@
 {
-  "recordedAt": "2026-09-07",
-  "entries": [
-    {
-      "key": "GET https://api.example.com/v1/search?q=lantern&page=1 #e3b0c44298fc",
-      "method": "GET",
-      "url": "https://api.example.com/v1/search?q=lantern&page=1",
-      "status": 200,
-      "headers": {
-        "content-type": "application/json"
-      },
-      "body": "{\"results\": [{\"id\": \"lantern-hours\", \"title\": \"Lantern Hours\", \"titles\": {\"english\": \"Lantern Hours\", \"romaji\": \"Lantern Hours\"}, \"year\": 2024, \"episodes\": 12, \"poster\": \"https://media.cdn.example.com/posters/1.jpg\", \"synopsis\": \"<p>A synopsis for <b>Lantern Hours</b>.</p>\", \"genres\": [\"Drama\", \"Slice of Life\"], \"status\": \"finished\"}, {\"id\": \"lantern-hours-second-movement\", \"title\": \"Lantern Hours Second Movement\", \"titles\": {\"english\": \"Lantern Hours Second Movement\", \"romaji\": \"Lantern Hours Second Movement\"}, \"year\": 2025, \"episodes\": 12, \"poster\": \"https://media.cdn.example.com/posters/2.jpg\", \"synopsis\": \"<p>A synopsis for <b>Lantern Hours Second Movement</b>.</p>\", \"genres\": [\"Drama\", \"Slice of Life\"], \"status\": \"airing\"}], \"total\": 2, \"page\": 1}"
-    },
-    {
-      "key": "GET https://api.example.com/v1/search?q=nothing%20matches%20this&page=1 #e3b0c44298fc",
-      "method": "GET",
-      "url": "https://api.example.com/v1/search?q=nothing%20matches%20this&page=1",
-      "status": 200,
-      "headers": {
-        "content-type": "application/json"
-      },
-      "body": "{\"results\": [], \"total\": 0, \"page\": 1}"
-    }
-  ]
+	"recordedAt": "2026-09-07",
+	"entries": [
+		{
+			"key": "GET https://api.example.com/v1/search?q=lantern&page=1 #e3b0c44298fc",
+			"method": "GET",
+			"url": "https://api.example.com/v1/search?q=lantern&page=1",
+			"status": 200,
+			"headers": {
+				"content-type": "application/json"
+			},
+			"body": "{\"results\": [{\"id\": \"lantern-hours\", \"title\": \"Lantern Hours\", \"titles\": {\"english\": \"Lantern Hours\", \"romaji\": \"Lantern Hours\"}, \"year\": 2024, \"episodes\": 12, \"poster\": \"https://media.cdn.example.com/posters/1.jpg\", \"synopsis\": \"<p>A synopsis for <b>Lantern Hours</b>.</p>\", \"genres\": [\"Drama\", \"Slice of Life\"], \"status\": \"finished\"}, {\"id\": \"lantern-hours-second-movement\", \"title\": \"Lantern Hours Second Movement\", \"titles\": {\"english\": \"Lantern Hours Second Movement\", \"romaji\": \"Lantern Hours Second Movement\"}, \"year\": 2025, \"episodes\": 12, \"poster\": \"https://media.cdn.example.com/posters/2.jpg\", \"synopsis\": \"<p>A synopsis for <b>Lantern Hours Second Movement</b>.</p>\", \"genres\": [\"Drama\", \"Slice of Life\"], \"status\": \"airing\"}], \"total\": 2, \"page\": 1}"
+		},
+		{
+			"key": "GET https://api.example.com/v1/search?q=nothing%20matches%20this&page=1 #e3b0c44298fc",
+			"method": "GET",
+			"url": "https://api.example.com/v1/search?q=nothing%20matches%20this&page=1",
+			"status": 200,
+			"headers": {
+				"content-type": "application/json"
+			},
+			"body": "{\"results\": [], \"total\": 0, \"page\": 1}"
+		}
+	]
 }

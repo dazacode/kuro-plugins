@@ -1,11 +1,13 @@
 {
-  "name": "@kuro/plugin-sdk",
-  "version": "0.1.0",
-  "type": "module",
-  "exports": {
-    ".": "./src/index.ts",
-    "./testing": "./src/testing/index.ts"
-  },
-  "files": ["src"],
-  "license": "Apache-2.0"
+	"name": "@kuro/plugin-sdk",
+	"version": "0.1.0",
+	"type": "module",
+	"exports": {
+		".": "./src/index.ts",
+		"./testing": "./src/testing/index.ts"
+	},
+	"files": [
+		"src"
+	],
+	"license": "Apache-2.0"
 }

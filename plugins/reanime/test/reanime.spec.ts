@@ -102,6 +102,39 @@ describe('searchCatalog', () => {
 		expect((await plugin.searchCatalog('broken', 1, ctx)).entries).toEqual([]);
 	});
 
+	it('reads the snake_case fields the API actually sends', async () => {
+		// Every one of these was wrong in the first port, and every one failed
+		// silently: `extraLarge` for `extra_large` is a poster that never
+		// loads, `seasonYear` for `season_year` is a year the matcher never
+		// gets, and an `episodes` field that does not exist at all reads as
+		// undefined so the episode-count check always passes.
+		const { ctx } = pluginTest(ROOT, 'search');
+		const page = await plugin.searchCatalog('lantern', 1, ctx);
+		const first = page.entries[0];
+
+		expect(first?.posterImageUrl).toBe('https://reanime.to/img/lantern-hours-xl.jpg');
+		expect(first?.year).toBe(2024);
+		// No total on the wire: the count is the highest episode available in
+		// either audio, which is what the source actually has.
+		expect(first?.episodeCount).toBe(12);
+	});
+
+	it('carries synonyms into the titles the matcher compares', async () => {
+		// The field that decides whether a show listed under one name is found
+		// by a query using another. Without it the matcher declines constantly.
+		const { ctx } = pluginTest(ROOT, 'search');
+		const page = await plugin.searchCatalog('lantern', 1, ctx);
+		expect(page.entries[0]?.alternativeTitles).toContain('Rantan Awaa');
+	});
+
+	it('merges tags into genres, dropping blanks', async () => {
+		// This source splits across two fields what most catalogues call one.
+		const { ctx } = pluginTest(ROOT, 'search');
+		const page = await plugin.searchCatalog('lantern', 1, ctx);
+		expect(page.entries[0]?.genres).toContain('Iyashikei');
+		expect(page.entries[0]?.genres).not.toContain('');
+	});
+
 	it('returns an empty page for no results rather than throwing', async () => {
 		const { ctx } = pluginTest(ROOT, 'search');
 		expect((await plugin.searchCatalog('zzzznothing', 1, ctx)).entries).toEqual([]);

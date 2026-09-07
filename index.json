@@ -1,84 +1,51 @@
 {
-  "schemaVersion": 1,
-  "name": "dazacode/kuro-plugins",
-  "updatedAt": "2026-09-07",
-  "signingKey": "MCowBQYDK2VwAyEAe85RwfbWBUGULiqAsCJPWxZPuQi9+4i9T4OJa7L3N1c=",
-  "plugins": [
-    {
-      "id": "app.kuro.plugins.example",
-      "name": "Example",
-      "description": "A complete, fully offline reference plugin. It talks to an API that does not exist, so it is deterministic forever and demonstrates every part of the ABI without naming a real source.",
-      "version": "1.0.0",
-      "author": "kuro",
-      "license": "Apache-2.0",
-      "kuroPluginApi": 1,
-      "minimumKuroVersion": "0.1.0",
-      "platforms": [
-        "android",
-        "ios",
-        "macos",
-        "windows",
-        "linux",
-        "web"
-      ],
-      "capabilities": [
-        "search",
-        "episodes",
-        "resolve",
-        "browse"
-      ],
-      "permissions": [
-        "network",
-        "storage"
-      ],
-      "hosts": [
-        "api.example.com",
-        "*.cdn.example.com"
-      ],
-      "language": "en",
-      "download": "https://raw.githubusercontent.com/dazacode/kuro-plugins/master/bundles/example-1.0.0.kuroplugin",
-      "sha256": "bd4d18efd07ea741e7eedf3d2d2288beac343fd5c309ee90fbc5c9d28b65842c",
-      "size": 9702
-    },
-    {
-      "id": "app.kuro.plugins.reanime",
-      "name": "Re:ANIME",
-      "description": "Ported from the Aniyomi Kotlin extension. Its CDN disguises HLS segments as images and masks them with a rotating XOR key, which the original solved by starting an HTTP server inside the app; here that is four declarative ops.",
-      "version": "0.1.0",
-      "author": "kuro",
-      "license": "Apache-2.0",
-      "kuroPluginApi": 1,
-      "minimumKuroVersion": "0.1.0",
-      "platforms": [
-        "android",
-        "ios",
-        "macos",
-        "windows",
-        "linux",
-        "web"
-      ],
-      "capabilities": [
-        "search",
-        "episodes",
-        "resolve",
-        "browse"
-      ],
-      "permissions": [
-        "network",
-        "storage"
-      ],
-      "hosts": [
-        "reanime.to",
-        "reanime.cz",
-        "reanime.wtf",
-        "flixcloud.cc",
-        "*.flixcloud.cc",
-        "enc-dec.app"
-      ],
-      "language": "en",
-      "download": "https://raw.githubusercontent.com/dazacode/kuro-plugins/master/bundles/reanime-0.1.0.kuroplugin",
-      "sha256": "6a6b3ce57fd4f92a3e519476d60e6148f9a9484d7679f6e3d062624e52a176fd",
-      "size": 13598
-    }
-  ]
+	"schemaVersion": 1,
+	"name": "dazacode/kuro-plugins",
+	"updatedAt": "2026-09-07",
+	"signingKey": "MCowBQYDK2VwAyEAe85RwfbWBUGULiqAsCJPWxZPuQi9+4i9T4OJa7L3N1c=",
+	"plugins": [
+		{
+			"id": "app.kuro.plugins.example",
+			"name": "Example",
+			"description": "A complete, fully offline reference plugin. It talks to an API that does not exist, so it is deterministic forever and demonstrates every part of the ABI without naming a real source.",
+			"version": "1.0.0",
+			"author": "kuro",
+			"license": "Apache-2.0",
+			"kuroPluginApi": 1,
+			"minimumKuroVersion": "0.1.0",
+			"platforms": ["android", "ios", "macos", "windows", "linux", "web"],
+			"capabilities": ["search", "episodes", "resolve", "browse"],
+			"permissions": ["network", "storage"],
+			"hosts": ["api.example.com", "*.cdn.example.com"],
+			"language": "en",
+			"download": "https://raw.githubusercontent.com/dazacode/kuro-plugins/master/bundles/example-1.0.0.kuroplugin",
+			"sha256": "bd4d18efd07ea741e7eedf3d2d2288beac343fd5c309ee90fbc5c9d28b65842c",
+			"size": 9702
+		},
+		{
+			"id": "app.kuro.plugins.reanime",
+			"name": "Re:ANIME",
+			"description": "Ported from the Aniyomi Kotlin extension. Its CDN disguises HLS segments as images and masks them with a rotating XOR key, which the original solved by starting an HTTP server inside the app; here that is four declarative ops.",
+			"version": "0.2.0",
+			"author": "kuro",
+			"license": "Apache-2.0",
+			"kuroPluginApi": 1,
+			"minimumKuroVersion": "0.1.0",
+			"platforms": ["android", "ios", "macos", "windows", "linux", "web"],
+			"capabilities": ["search", "episodes", "resolve", "browse"],
+			"permissions": ["network", "storage"],
+			"hosts": [
+				"reanime.to",
+				"reanime.cz",
+				"reanime.wtf",
+				"flixcloud.cc",
+				"*.flixcloud.cc",
+				"enc-dec.app"
+			],
+			"language": "en",
+			"download": "https://raw.githubusercontent.com/dazacode/kuro-plugins/master/bundles/reanime-0.2.0.kuroplugin",
+			"sha256": "7cc8d19935e00da9a11acf40a82c08efaab61df7767c39cd1ad204a0f775f0b2",
+			"size": 13848
+		}
+	]
 }

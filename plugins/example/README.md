@@ -23,13 +23,13 @@ playable mirrors, an embed page with its configuration wedged into a `<script>`
 tag as not-quite-JSON, and a CDN that disguises its segments as images and
 masks them.
 
-| In `src/index.ts` | Why it is there |
-| --- | --- |
-| `page()` | `hasMore` from the **total**, not from `entries.length` |
-| `listEpisodes` | reading a host-rendered setting (`hide_filler`) |
-| `resolve` | mirrors fanned out with a concurrency cap, dead ones dropped |
-| `resolveServer` | `matchOne` + `parseJson5` on an embedded config |
-| `pipeline` | the four ops that replace a proxy server |
+| In `src/index.ts` | Why it is there                                              |
+| ----------------- | ------------------------------------------------------------ |
+| `page()`          | `hasMore` from the **total**, not from `entries.length`      |
+| `listEpisodes`    | reading a host-rendered setting (`hide_filler`)              |
+| `resolve`         | mirrors fanned out with a concurrency cap, dead ones dropped |
+| `resolveServer`   | `matchOne` + `parseJson5` on an embedded config              |
+| `pipeline`        | the four ops that replace a proxy server                     |
 
 ## The four rules
 
@@ -38,7 +38,7 @@ masks them.
 2. **You never draw UI.** `manifest.settings` is rendered by the host on all six
    platforms in its own design tokens. You read values.
 3. **You never touch a segment.** When a stream is not playable as served you
-   *describe* the fix with `ops`, and the host executes it natively.
+   _describe_ the fix with `ops`, and the host executes it natively.
 4. **Missing data is an event, not a value.** `matchOne` throws
    `SourceChangedError` naming what it wanted and where. Returning an empty list
    instead is how a broken plugin looks exactly like a show with no episodes.

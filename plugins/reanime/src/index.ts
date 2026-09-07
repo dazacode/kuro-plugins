@@ -53,6 +53,7 @@ import {
 	type SubtitleTrack
 } from '@kuro/plugin-sdk';
 
+import { availableEpisodes } from './dto';
 import type {
 	AnimeDetailDto,
 	AnimeDto,
@@ -159,10 +160,11 @@ function preferredTitle(anime: AnimeDto, language: string): string | null {
 function poster(anime: AnimeDto): string | undefined {
 	const cover = anime.cover_image;
 	if (cover == null) return undefined;
-	const upscaled = cover.extraLarge?.includes('tmdb.org') === true;
+	const extraLarge = cover.extra_large;
+	const upscaled = extraLarge?.includes('tmdb.org') === true;
 	const chosen = upscaled
-		? (cover.large ?? cover.medium ?? cover.extraLarge)
-		: (cover.extraLarge ?? cover.large ?? cover.medium);
+		? (cover.large ?? cover.medium ?? extraLarge)
+		: (extraLarge ?? cover.large ?? cover.medium);
 	return chosen ?? undefined;
 }
 
@@ -170,23 +172,42 @@ function toEntry(anime: AnimeDto, language: string): SourceCatalogEntry | null {
 	const title = preferredTitle(anime, language);
 	if (title === null) return null;
 
-	const alternatives = [anime.title?.romaji, anime.title?.english, anime.title?.native].filter(
+	const detail = anime as AnimeDetailDto;
+
+	// Every name this show is known by, primary first, blanks and duplicates
+	// removed. `synonyms` is the field that earns its keep here: the matcher
+	// compares these against the canonical titles, and without them a show
+	// listed under its English name never matches a romaji query.
+	const alternatives = [
+		anime.title?.romaji,
+		anime.title?.english,
+		anime.title?.native,
+		...(detail.synonyms ?? [])
+	].filter(
 		(value): value is string => typeof value === 'string' && value.length > 0 && value !== title
 	);
 
 	const description = anime.description == null ? undefined : stripHtml(anime.description);
 	const artwork = poster(anime);
-	const detail = anime as AnimeDetailDto;
+
+	// Genres and tags together, as the upstream extension does: this source
+	// splits what most catalogues call one thing across two fields.
+	const genres = [
+		...(anime.genres ?? []),
+		...(detail.tags ?? []).map((tag) => tag.name).filter((name): name is string => name != null)
+	].filter((value) => value.trim().length > 0);
+
+	const episodeCount = availableEpisodes(detail);
 
 	return {
 		sourceMediaId: anime.anime_id,
 		title,
-		...(alternatives.length > 0 ? { alternativeTitles: alternatives } : {}),
+		...(alternatives.length > 0 ? { alternativeTitles: [...new Set(alternatives)] } : {}),
 		...(artwork === undefined ? {} : { posterImageUrl: artwork }),
 		...(description ? { description } : {}),
-		...(anime.genres == null ? {} : { genres: anime.genres }),
-		...(detail.seasonYear == null ? {} : { year: detail.seasonYear }),
-		...(detail.episodes == null ? {} : { episodeCount: detail.episodes }),
+		...(genres.length > 0 ? { genres } : {}),
+		...(detail.season_year == null ? {} : { year: detail.season_year }),
+		...(episodeCount === undefined ? {} : { episodeCount }),
 		status: parseStatus(anime.status)
 	};
 }
@@ -351,8 +372,7 @@ export default defineSource({
 
 			const hasSub = meta !== null && number <= meta.subbed;
 			const hasDub = meta !== null && number <= meta.dubbed;
-			const audio =
-				hasSub && hasDub ? 'Sub & Dub' : hasDub ? 'Dub' : hasSub ? 'Sub' : undefined;
+			const audio = hasSub && hasDub ? 'Sub & Dub' : hasDub ? 'Dub' : hasSub ? 'Sub' : undefined;
 
 			episodes.push({
 				number,
@@ -469,7 +489,9 @@ async function resolveMask(
 				const script = await ctx.http.text(scriptUrl, flixHeaders());
 				const digits = optionalMatchOne(XOR_MASK, script);
 				if (digits !== null) {
-					const mask = Uint8Array.from(digits.split(',').map((value) => Number(value.trim()) & 0xff));
+					const mask = Uint8Array.from(
+						digits.split(',').map((value) => Number(value.trim()) & 0xff)
+					);
 					if (mask.length === 16) {
 						await ctx.storage.set(STORAGE_MASK_KEY, digits);
 						return mask;

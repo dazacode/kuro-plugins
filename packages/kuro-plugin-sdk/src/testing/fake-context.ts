@@ -112,9 +112,7 @@ class CassetteHttpClient implements HttpClient {
 			url,
 			status: response.status,
 			headers,
-			...(textual
-				? { body: new TextDecoder().decode(bytes) }
-				: { bodyBase64: toBase64(bytes) })
+			...(textual ? { body: new TextDecoder().decode(bytes) } : { bodyBase64: toBase64(bytes) })
 		});
 		return toResponse(this.cassette.find(key)!);
 	}

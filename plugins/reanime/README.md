@@ -3,15 +3,15 @@
 Ported from the Aniyomi Kotlin extension. This is the plugin that exists to
 prove the design, so the numbers matter:
 
-| | Kotlin extension | This plugin |
-| --- | --- | --- |
-| Source | 2,218 lines across 5 files | ~470 lines across 2 |
-| Local HTTP server | **460 lines** (`FlixProxyServer.kt`, NanoHTTPD) | none |
-| Settings UI | Android `PreferenceScreen`, ~90 lines | 9 manifest descriptors |
-| Platforms | Android | all six |
+|                   | Kotlin extension                                | This plugin            |
+| ----------------- | ----------------------------------------------- | ---------------------- |
+| Source            | 2,218 lines across 5 files                      | ~470 lines across 2    |
+| Local HTTP server | **460 lines** (`FlixProxyServer.kt`, NanoHTTPD) | none                   |
+| Settings UI       | Android `PreferenceScreen`, ~90 lines           | 9 manifest descriptors |
+| Platforms         | Android                                         | all six                |
 
-The 460 lines are the point. The original starts an HTTP server *inside the
-app*, binds `127.0.0.1`, streams every segment through an XOR-decoding
+The 460 lines are the point. The original starts an HTTP server _inside the
+app_, binds `127.0.0.1`, streams every segment through an XOR-decoding
 `ForwardingSource`, rewrites the manifest, and hands the player a
 `http://127.0.0.1:…` URL — because the extension API ends at a URL and this
 CDN does not serve anything a player can open.
@@ -25,7 +25,7 @@ CDN does not serve anything a player can open.
 3. Some segments arrive plain anyway, so the unmasking has to be conditional or
    it corrupts them.
 4. The master manifest is only fetchable through a signing wrapper on a third
-   host, and the manifest it returns contains URIs relative to the *real*
+   host, and the manifest it returns contains URIs relative to the _real_
    address, not the wrapper's.
 5. `BANDWIDTH` is emitted in Kbps. A player that believes it throttles its own
    buffer into permanent rebuffering on a fast connection.
@@ -73,7 +73,7 @@ When all three are stale, `assert-byte` says so by name.
 **Important.** `cassettes/*.json` were hand-built to the shapes documented in
 the upstream `Dto.kt`. They were **not** recorded from the live source. They
 prove the parsing, the settings, the failure classification and the pipeline
-are correct *against those shapes*; they cannot prove the shapes are current.
+are correct _against those shapes_; they cannot prove the shapes are current.
 
 To get real ones, from a machine that can reach the source:
 

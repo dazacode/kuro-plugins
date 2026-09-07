@@ -4,8 +4,8 @@ The plugin platform for [kuro](https://github.com/dazacode/kuro): the SDK, the
 tooling, and the plugins themselves.
 
 A plugin teaches kuro about a content source it did not know about. It answers
-three questions — *what shows do you have?*, *what episodes?*, *how do I play
-one?* — and kuro renders the answers with the same screens it uses for
+three questions — _what shows do you have?_, _what episodes?_, _how do I play
+one?_ — and kuro renders the answers with the same screens it uses for
 everything else. The plugin supplies **data**; the host supplies **experience**.
 
 **kuro ships no sources and depends on no plugin.** Delete this entire
@@ -153,13 +153,13 @@ regardless of who signed what.
 
 ## Where things are specified
 
-| Question | File |
-| --- | --- |
-| Why any of this | `kuro/docs/ADR-0002-plugin-system.md` |
-| What a plugin is, normatively | `kuro/contract/plugin-api/ABI.md` |
-| Manifest fields | `schema/kuro-plugin.schema.json` |
-| Byte-op semantics | `fixtures/stream_pipeline.json` |
-| How to port an existing extension | `docs/porting.md` |
+| Question                          | File                                  |
+| --------------------------------- | ------------------------------------- |
+| Why any of this                   | `kuro/docs/ADR-0002-plugin-system.md` |
+| What a plugin is, normatively     | `kuro/contract/plugin-api/ABI.md`     |
+| Manifest fields                   | `schema/kuro-plugin.schema.json`      |
+| Byte-op semantics                 | `fixtures/stream_pipeline.json`       |
+| How to port an existing extension | `docs/porting.md`                     |
 
 `schema/` and `fixtures/` are copies of kuro's `contract/`. They have to be —
 the two repositories are independent by design — and

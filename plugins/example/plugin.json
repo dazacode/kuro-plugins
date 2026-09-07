@@ -1,49 +1,49 @@
 {
-  "schemaVersion": 1,
-  "id": "app.kuro.plugins.example",
-  "name": "Example",
-  "description": "A complete, fully offline reference plugin. It talks to an API that does not exist, so it is deterministic forever and demonstrates every part of the ABI without naming a real source.",
-  "version": "1.0.0",
-  "author": { "name": "kuro" },
-  "license": "Apache-2.0",
-  "kuroPluginApi": 1,
-  "minimumKuroVersion": "0.1.0",
-  "platforms": ["android", "ios", "macos", "windows", "linux", "web"],
-  "capabilities": ["search", "episodes", "resolve", "browse"],
-  "permissions": ["network", "storage"],
-  "entrypoint": "example",
-  "language": "en",
-  "network": { "hosts": ["api.example.com", "*.cdn.example.com"] },
-  "timeouts": { "requestMs": 10000, "operationMs": 30000 },
-  "settings": [
-    {
-      "id": "quality",
-      "type": "select",
-      "label": "Preferred quality",
-      "help": "The player still adapts; this only decides which mirror is offered first.",
-      "default": "1080p",
-      "options": [
-        { "value": "1080p", "label": "1080p" },
-        { "value": "720p", "label": "720p" },
-        { "value": "480p", "label": "480p" }
-      ]
-    },
-    {
-      "id": "audio",
-      "type": "select",
-      "label": "Preferred audio",
-      "default": "sub",
-      "options": [
-        { "value": "sub", "label": "Subtitled" },
-        { "value": "dub", "label": "Dubbed" }
-      ]
-    },
-    {
-      "id": "hide_filler",
-      "type": "switch",
-      "label": "Hide filler episodes",
-      "default": false
-    }
-  ],
-  "keywords": ["example", "reference", "offline"]
+	"schemaVersion": 1,
+	"id": "app.kuro.plugins.example",
+	"name": "Example",
+	"description": "A complete, fully offline reference plugin. It talks to an API that does not exist, so it is deterministic forever and demonstrates every part of the ABI without naming a real source.",
+	"version": "1.0.0",
+	"author": { "name": "kuro" },
+	"license": "Apache-2.0",
+	"kuroPluginApi": 1,
+	"minimumKuroVersion": "0.1.0",
+	"platforms": ["android", "ios", "macos", "windows", "linux", "web"],
+	"capabilities": ["search", "episodes", "resolve", "browse"],
+	"permissions": ["network", "storage"],
+	"entrypoint": "example",
+	"language": "en",
+	"network": { "hosts": ["api.example.com", "*.cdn.example.com"] },
+	"timeouts": { "requestMs": 10000, "operationMs": 30000 },
+	"settings": [
+		{
+			"id": "quality",
+			"type": "select",
+			"label": "Preferred quality",
+			"help": "The player still adapts; this only decides which mirror is offered first.",
+			"default": "1080p",
+			"options": [
+				{ "value": "1080p", "label": "1080p" },
+				{ "value": "720p", "label": "720p" },
+				{ "value": "480p", "label": "480p" }
+			]
+		},
+		{
+			"id": "audio",
+			"type": "select",
+			"label": "Preferred audio",
+			"default": "sub",
+			"options": [
+				{ "value": "sub", "label": "Subtitled" },
+				{ "value": "dub", "label": "Dubbed" }
+			]
+		},
+		{
+			"id": "hide_filler",
+			"type": "switch",
+			"label": "Hide filler episodes",
+			"default": false
+		}
+	],
+	"keywords": ["example", "reference", "offline"]
 }

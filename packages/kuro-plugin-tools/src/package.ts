@@ -117,7 +117,10 @@ export async function packagePlugin(
 		const from = join(directory, directoryName);
 		if (!existsSync(from)) continue;
 		for (const file of walk(from)) {
-			files.set(`${directoryName}/${relative(from, file).split('\\').join('/')}`, readFileSync(file));
+			files.set(
+				`${directoryName}/${relative(from, file).split('\\').join('/')}`,
+				readFileSync(file)
+			);
 		}
 	}
 
@@ -161,7 +164,10 @@ export async function packagePlugin(
 	files.set('signature.json', Buffer.from(`${JSON.stringify(signature, null, 2)}\n`));
 
 	mkdirSync(outputDirectory, { recursive: true });
-	const archivePath = join(outputDirectory, `${manifest.entrypoint}-${manifest.version}.kuroplugin`);
+	const archivePath = join(
+		outputDirectory,
+		`${manifest.entrypoint}-${manifest.version}.kuroplugin`
+	);
 	writeFileSync(archivePath, buildZip(files));
 
 	// A sibling checksum in `sha256sum` format, so `sha256sum -c` works with no

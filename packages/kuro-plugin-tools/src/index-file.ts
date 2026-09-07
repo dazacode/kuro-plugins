@@ -131,7 +131,9 @@ export function buildIndex(options: BuildIndexOptions): RepositoryIndex {
 	const signingKey =
 		options.publicKeyPem === undefined
 			? undefined
-			: createPublicKey(options.publicKeyPem).export({ type: 'spki', format: 'der' }).toString('base64');
+			: createPublicKey(options.publicKeyPem)
+					.export({ type: 'spki', format: 'der' })
+					.toString('base64');
 
 	return {
 		schemaVersion: 1,

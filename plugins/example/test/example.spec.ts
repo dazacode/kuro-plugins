@@ -176,7 +176,11 @@ describe('the declared pipeline actually decodes a real segment', () => {
 	// the CDN served into something a demuxer accepts.
 	it('turns a disguised, masked segment into MPEG-TS', async () => {
 		const { ctx } = pluginTest(ROOT, 'resolve');
-		const [source] = await plugin.resolve('lantern-hours', { number: 3, sourceEpisodeId: 'ep-3' }, ctx);
+		const [source] = await plugin.resolve(
+			'lantern-hours',
+			{ number: 3, sourceEpisodeId: 'ep-3' },
+			ctx
+		);
 
 		const response = await ctx.http.send('https://media.cdn.example.com/hls/aurora/seg-0001.ts');
 		const raw = await response.bytes();
@@ -196,7 +200,11 @@ describe('the declared pipeline actually decodes a real segment', () => {
 
 	it('fails loudly when the key is stale, rather than producing a black screen', async () => {
 		const { ctx } = pluginTest(ROOT, 'resolve');
-		const [source] = await plugin.resolve('lantern-hours', { number: 3, sourceEpisodeId: 'ep-3' }, ctx);
+		const [source] = await plugin.resolve(
+			'lantern-hours',
+			{ number: 3, sourceEpisodeId: 'ep-3' },
+			ctx
+		);
 
 		const ops = source!.pipeline!.segment!.map((op) =>
 			op.kind === 'xor-repeating' ? { ...op, key: 'AAAAAAAAAAAAAAAAAAAAAA==' } : op
