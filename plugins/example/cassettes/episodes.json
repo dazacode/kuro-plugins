@@ -1,0 +1,15 @@
+{
+  "recordedAt": "2026-09-07",
+  "entries": [
+    {
+      "key": "GET https://api.example.com/v1/anime/lantern-hours/episodes #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://api.example.com/v1/anime/lantern-hours/episodes",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": "{\"episodes\": [{\"n\": 1, \"id\": \"ep-1\", \"title\": \"Episode 1\", \"aired\": \"2024-01-02T14:00:00Z\", \"filler\": false, \"recap\": false, \"audio\": [\"sub\", \"dub\"]}, {\"n\": 2, \"id\": \"ep-2\", \"title\": \"Episode 2\", \"aired\": \"2024-01-03T14:00:00Z\", \"filler\": false, \"recap\": false, \"audio\": [\"sub\", \"dub\"]}, {\"n\": 3, \"id\": \"ep-3\", \"title\": \"Episode 3\", \"aired\": \"2024-01-04T14:00:00Z\", \"filler\": false, \"recap\": false, \"audio\": [\"sub\", \"dub\"]}, {\"n\": 4, \"id\": \"ep-4\", \"title\": \"Episode 4\", \"aired\": \"2024-01-05T14:00:00Z\", \"filler\": false, \"recap\": false, \"audio\": [\"sub\", \"dub\"]}, {\"n\": 5, \"id\": \"ep-5\", \"title\": \"Episode 5\", \"aired\": \"2024-02-06T14:00:00Z\", \"filler\": false, \"recap\": false, \"audio\": [\"sub\", \"dub\"]}, {\"n\": 6, \"id\": \"ep-6\", \"title\": \"Episode 6\", \"aired\": \"2024-02-07T14:00:00Z\", \"filler\": true, \"recap\": false, \"audio\": [\"sub\", \"dub\"]}, {\"n\": 7, \"id\": \"ep-7\", \"title\": \"Episode 7\", \"aired\": \"2024-02-08T14:00:00Z\", \"filler\": true, \"recap\": false, \"audio\": [\"sub\", \"dub\"]}, {\"n\": 8, \"id\": \"ep-8\", \"title\": \"Episode 8\", \"aired\": \"2024-02-09T14:00:00Z\", \"filler\": false, \"recap\": false, \"audio\": [\"sub\", \"dub\"]}, {\"n\": 9, \"id\": \"ep-9\", \"title\": \"Episode 9\", \"aired\": \"2024-03-10T14:00:00Z\", \"filler\": false, \"recap\": false, \"audio\": [\"sub\"]}, {\"n\": 10, \"id\": \"ep-10\", \"title\": \"Episode 10\", \"aired\": \"2024-03-11T14:00:00Z\", \"filler\": false, \"recap\": false, \"audio\": [\"sub\"]}, {\"n\": 11, \"id\": \"ep-11\", \"title\": \"Episode 11\", \"aired\": \"2024-03-12T14:00:00Z\", \"filler\": false, \"recap\": true, \"audio\": [\"sub\"]}, {\"n\": 12, \"id\": \"ep-12\", \"title\": \"Episode 12\", \"aired\": \"2024-03-13T14:00:00Z\", \"filler\": false, \"recap\": false, \"audio\": [\"sub\"]}]}"
+    }
+  ]
+}

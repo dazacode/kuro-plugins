@@ -1,0 +1,55 @@
+{
+  "recordedAt": "2026-09-07",
+  "entries": [
+    {
+      "key": "GET https://api.example.com/v1/watch/lantern-hours/ep-3 #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://api.example.com/v1/watch/lantern-hours/ep-3",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": "{\"servers\": [{\"name\": \"Aurora 1080p\", \"embed\": \"https://media.cdn.example.com/embed/aurora\", \"type\": \"sub\"}, {\"name\": \"Borealis 720p\", \"embed\": \"https://media.cdn.example.com/embed/borealis\", \"type\": \"sub\"}, {\"name\": \"Aurora 1080p\", \"embed\": \"https://media.cdn.example.com/embed/aurora-dub\", \"type\": \"dub\"}]}"
+    },
+    {
+      "key": "GET https://media.cdn.example.com/embed/aurora #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://media.cdn.example.com/embed/aurora",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html"
+      },
+      "body": "<!doctype html><html><head><title>player</title></head><body>\n<script>\nwindow.__PLAYER__ = {\n  stream: \"https://media.cdn.example.com/hls/aurora/master.m3u8?token=abc123\",\n  mask: \"9d2af147b38e5c70a619e43bd8620fc5\",\n  subtitles: [ { url: \"https://media.cdn.example.com/subs/en.vtt\", lang: \"en\" }, { url: \"https://media.cdn.example.com/subs/es.vtt\", lang: \"es\" }, ],\n  intro: [ 85, 175 ],\n  outro: [ 1320, 1410 ],\n  legacy: undefined,\n};\n</script>\n</body></html>"
+    },
+    {
+      "key": "GET https://media.cdn.example.com/embed/aurora-dub #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://media.cdn.example.com/embed/aurora-dub",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html"
+      },
+      "body": "<!doctype html><html><head><title>player</title></head><body>\n<script>\nwindow.__PLAYER__ = {\n  stream: \"https://media.cdn.example.com/hls/aurora-dub/master.m3u8?token=abc123\",\n  mask: \"9d2af147b38e5c70a619e43bd8620fc5\",\n  subtitles: [ { url: \"https://media.cdn.example.com/subs/en.vtt\", lang: \"en\" }, { url: \"https://media.cdn.example.com/subs/es.vtt\", lang: \"es\" }, ],\n  intro: [ 85, 175 ],\n  outro: [ 1320, 1410 ],\n  legacy: undefined,\n};\n</script>\n</body></html>"
+    },
+    {
+      "key": "GET https://media.cdn.example.com/embed/borealis #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://media.cdn.example.com/embed/borealis",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html"
+      },
+      "body": "<!doctype html><html><head><title>player</title></head><body>\n<script>\nwindow.__PLAYER__ = {\n  stream: \"https://media.cdn.example.com/hls/borealis/master.m3u8?token=abc123\",\n  mask: \"9d2af147b38e5c70a619e43bd8620fc5\",\n  intro: [ 85, 175 ],\n  outro: [ 1320, 1410 ],\n  legacy: undefined,\n};\n</script>\n</body></html>"
+    },
+    {
+      "key": "GET https://media.cdn.example.com/hls/aurora/seg-0001.ts #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://media.cdn.example.com/hls/aurora/seg-0001.ts",
+      "status": 200,
+      "headers": {
+        "content-type": "image/webp"
+      },
+      "bodyBase64": "UklGRmwEAABXRUJQ2hqkPSxKtX6VQZmZH44e88aqVI1cmmUuJbEpyc9ebkM2+gRdjOrV3nXh+Xm/7r4TZgq0LTw6hY6FUYmpb74O49ZaZP1sinU+1YFZ2d9OXrMG6hRNnNol7mXx6QmPHq4DdjrEHcwqlZ61Ibm5f67+06ZKdO18ekVOxZFJ6S9+TqMWmiS9rMo1/hXBGRmfDp5zRirUDdwa5a6lMalJT97uw7Z6hN0MalVe9WF5+T9uPpPmijStvLoFDgXRCSmfPo5jVtrkfewK9b5VAdlZX87eM4ZqlM0cWqVu5XFpiQ+eLoP2ukSdTKoVHjWhOTn/Ln5TJsr0bfz6xc5FEclpr/7OI5YapD0sSrV+lUGZmR+OHvPGqlSNXJplLiWxKcnPXm5DNvoEXYzq1d514fl5v+6+E2YKtC08OoWOhVGJqW++DuPWWmT9bIp1PtWBWdnfTl6zBuoUTZzaJe5l8ekJjx6uA3Y6xB3MKpWetSG5uX+u/tOmSnTtfHpFTuGRSekvfk6jFpokvazKNf4VwRkZnw6ec0Yq1A3cGuWupTGpSU/e7sO2eoTdDGpVXvVhefk/bj6T5oo0rby6BQ4F0Qkp7z6OY1ba5H3sCvW+VQHZWV/O3jOGapTNHFqlbuVxaYkPni6D9rpEnUyqFR41oTk5/y5+UybK9G38+sXORRHJaa/+ziOWGqQ9LEq1fpVBmZkfjh7zxqpUjVyaZS4lsSnJz15uQzb6BF2M6tXedeH5eb/uvhNmCrQt9DqFjoVRialvvg7j1lpk/WyKdT7VgVnZ305eswbqFE2c2iXuZfHpCY8ergN2OsQdzCqVnrUhubl/rv7Tpkp07Xx6RU7FkUnpL35OoxaaJL2syjX+FcEZGZ8OnnNGKtQN3BrlrqUxqUlP3u7DtnqE3QxqVV71YXn5P24+k+aKNK28ugUOBdEJKe8+jmNW2uR97Ar1vlUB2Vlfzt4zhmqUzRxapW7lcWmJD54ug/a6RJ1MqhUeNaE5Of8uflPayvRt/PrFzkURyWmv/s4jlhqkPSxKtX6VQZmZH44e88aqVI1cmmUuJbEpyc9ebkM2+gRdjOrV3nXh+Xm/7r4TZgq0LTw6hY6FUYmpb74O49ZaZP1sinU+1YFZ2d9OXrMG6hRNnNol7mXx6QmPHq4DdjrEHcwqlZ61Ibm5f67+06ZKdO18ekVOxZFJ6S9+TqMWmiS9rMo1/hXBGRmfDp5zRirUDdwa5a6lMalJT97uw7Z6hN0MalVe9WF5+Z9uPpPmijStvLoFDgXRCSnvPo5jVtrkfewK9b5VAdlZX87eM4ZqlM0cWqVu5XFpiQ+eLoP2ukSdTKoVHjWhOTn/Ln5TJsr0bfz6xc5FEclpr/7OI5YapD0sSrV+lUGZmR+OHvPGqlSNXJplLiWxKcnPXm5DNvoEXYzq1d514fl5v+6+E2YKtC08OoWOhVGJqW++DuPWWmT9bIp1PtWBWdnfTl6zBuoUTZzaJe5l8ekJjx6uA3Y6xB3MKpWe"
+    }
+  ]
+}

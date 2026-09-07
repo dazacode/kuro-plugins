@@ -1,0 +1,8 @@
+{
+  "name": "@kuro-plugins/example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "dependencies": { "@kuro/plugin-sdk": "workspace:*" }
+}
