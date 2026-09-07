@@ -78,9 +78,23 @@ returns a valid index:
 
 1. The URL itself, if it ends in `.json`.
 2. `<url>/index.json`.
-3. For a GitHub repository URL — `https://github.com/<owner>/<repo>` — the
-   latest release's `index.json` asset, then
-   `https://raw.githubusercontent.com/<owner>/<repo>/<default branch>/index.json`.
+3. For a GitHub repository URL — `https://github.com/<owner>/<repo>` —
+   `https://raw.githubusercontent.com/<owner>/<repo>/<default branch>/index.json`
+   and its `dist/` variant, **then** the latest release's `index.json` asset.
+
+**That ordering is load-bearing, and the reason is CORS.** A GitHub *release
+asset* is served with no `Access-Control-Allow-Origin` header at all, so a
+browser `fetch` for one is blocked before the client sees a byte;
+`raw.githubusercontent.com` sends `access-control-allow-origin: *`. Putting the
+release asset first would produce a repository that adds fine on the five
+Flutter targets and silently cannot be added in a browser — precisely the split
+this project exists not to have.
+
+The same applies to every `download` URL in an index. **A repository that
+publishes its bundles only as release assets is a repository the browser client
+cannot install from.** Publish them somewhere that sends CORS headers — a
+committed path served by `raw.githubusercontent.com`, GitHub Pages, or your own
+host — and keep release assets as an extra rather than as the only route.
 
 The GitHub case is spelled out because it is what people will actually paste,
 and because "paste the raw URL of the JSON file on the default branch" is a
