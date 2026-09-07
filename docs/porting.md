@@ -13,24 +13,24 @@ that is host work here, so the port is mostly deletion.
 
 ## 0. The map
 
-| Kotlin | kuro | Notes |
-| --- | --- | --- |
-| `popularAnimeRequest` + `popularAnimeParse` | `browse('popular', page, ctx)` | request and parse collapse into one function |
-| `latestUpdatesRequest` + `…Parse` | `browse('latest', …)` | cursor travels on `CatalogPage.cursor` |
-| `searchAnimeRequest` + `…Parse` | `searchCatalog(query, page, ctx)` | |
-| `animeDetailsParse` | *(nothing)* | the metadata layer owns this — see §1 |
-| `episodeListRequest` + `…Parse` | `listEpisodes(id, ctx)` | ascending; the host does not sort |
-| `videoListRequest` + `…Parse` | `resolve(id, episode, ctx)` | returns a list, best first |
-| `SAnime` | `SourceCatalogEntry` | **no canonical id** |
-| `SEpisode` | `SourceEpisode` | |
-| `Video(url, quality, headers)` | `PlaybackSource` + `pipeline` | the important difference |
-| `Track(url, lang)` | `SubtitleTrack` | needs a `format` |
-| `setupPreferenceScreen` | `manifest.settings` | JSON, not code |
-| `OkHttpClient`, interceptors, `rateLimit` | `ctx.http` | not yours to configure |
-| `SharedPreferences` | `ctx.settings` (read) / `ctx.storage` (write) | |
-| a `NanoHTTPD` proxy server | `pipeline` | **§4** |
-| `Jsoup` / CSS selectors | `matchOne` + regex | no DOM in any engine |
-| `LruCache` on a field | `ctx.storage` | module state does not survive the sandbox |
+| Kotlin                                      | kuro                                          | Notes                                        |
+| ------------------------------------------- | --------------------------------------------- | -------------------------------------------- |
+| `popularAnimeRequest` + `popularAnimeParse` | `browse('popular', page, ctx)`                | request and parse collapse into one function |
+| `latestUpdatesRequest` + `…Parse`           | `browse('latest', …)`                         | cursor travels on `CatalogPage.cursor`       |
+| `searchAnimeRequest` + `…Parse`             | `searchCatalog(query, page, ctx)`             |                                              |
+| `animeDetailsParse`                         | _(nothing)_                                   | the metadata layer owns this — see §1        |
+| `episodeListRequest` + `…Parse`             | `listEpisodes(id, ctx)`                       | ascending; the host does not sort            |
+| `videoListRequest` + `…Parse`               | `resolve(id, episode, ctx)`                   | returns a list, best first                   |
+| `SAnime`                                    | `SourceCatalogEntry`                          | **no canonical id**                          |
+| `SEpisode`                                  | `SourceEpisode`                               |                                              |
+| `Video(url, quality, headers)`              | `PlaybackSource` + `pipeline`                 | the important difference                     |
+| `Track(url, lang)`                          | `SubtitleTrack`                               | needs a `format`                             |
+| `setupPreferenceScreen`                     | `manifest.settings`                           | JSON, not code                               |
+| `OkHttpClient`, interceptors, `rateLimit`   | `ctx.http`                                    | not yours to configure                       |
+| `SharedPreferences`                         | `ctx.settings` (read) / `ctx.storage` (write) |                                              |
+| a `NanoHTTPD` proxy server                  | `pipeline`                                    | **§4**                                       |
+| `Jsoup` / CSS selectors                     | `matchOne` + regex                            | no DOM in any engine                         |
+| `LruCache` on a field                       | `ctx.storage`                                 | module state does not survive the sandbox    |
 
 ---
 
@@ -39,8 +39,8 @@ that is host work here, so the port is mostly deletion.
 A Kotlin extension's `animeDetailsParse` fills in synopsis, banner, score,
 studios and so on. **Do not port it.**
 
-kuro splits *what a show is* (metadata: AniList, MAL, Kitsu) from *what this
-source can play*. A source has no canonical ids and must not invent any,
+kuro splits _what a show is_ (metadata: AniList, MAL, Kitsu) from _what this
+source can play_. A source has no canonical ids and must not invent any,
 because the user's library keys on those and a source being wrong would damage
 it. `SourceCatalogEntry` therefore carries only what improves a **match score**:
 titles, year, episode count, format.
@@ -59,12 +59,12 @@ Every `addListPreference`, `SwitchPreferenceCompat` and
 
 ```json
 {
-  "id": "quality",
-  "type": "select",
-  "label": "Preferred quality",
-  "help": "The player still adapts; this decides which mirror is offered first.",
-  "default": "1080",
-  "options": [{ "value": "1080", "label": "1080p" }]
+	"id": "quality",
+	"type": "select",
+	"label": "Preferred quality",
+	"help": "The player still adapts; this decides which mirror is offered first.",
+	"default": "1080",
+	"options": [{ "value": "1080", "label": "1080p" }]
 }
 ```
 
@@ -134,17 +134,17 @@ If instead the extension does **any** of these:
 
 …then those are `pipeline` declarations, not code. Translate them:
 
-| Kotlin does | Declare |
-| --- | --- |
-| `detectHeader()` returning 8 or 12, then skipping | `ops.dropMagicPrefix([{ magic, drop }, …])` |
-| `bytes[i] xor mask[i and 15]` | `ops.xorRepeating(mask)` |
-| `if (firstByte != 0x47) shouldXor = false` | `ops.xorRepeating(mask, { at: 0, equals: 0x47 })` |
-| `if (decrypted != 0x47) throw` | `ops.assertMpegTs('…')` |
-| `parentHttpUrl.resolve(line)` | `manifest.absolutise()` |
-| `if (peakBw < 100_000) peakBw * 1000` | `manifest.repairBandwidth()` |
-| `ensureToken(segmentUrl, parentUrl)` | `propagateQuery: ['token']` |
-| `wrapInDecApi(url, payload)` on the master only | `manifest.rebaseFromQuery('url')` |
-| per-host `Origin`/`Referer` switching | `headersByHost` |
+| Kotlin does                                       | Declare                                           |
+| ------------------------------------------------- | ------------------------------------------------- |
+| `detectHeader()` returning 8 or 12, then skipping | `ops.dropMagicPrefix([{ magic, drop }, …])`       |
+| `bytes[i] xor mask[i and 15]`                     | `ops.xorRepeating(mask)`                          |
+| `if (firstByte != 0x47) shouldXor = false`        | `ops.xorRepeating(mask, { at: 0, equals: 0x47 })` |
+| `if (decrypted != 0x47) throw`                    | `ops.assertMpegTs('…')`                           |
+| `parentHttpUrl.resolve(line)`                     | `manifest.absolutise()`                           |
+| `if (peakBw < 100_000) peakBw * 1000`             | `manifest.repairBandwidth()`                      |
+| `ensureToken(segmentUrl, parentUrl)`              | `propagateQuery: ['token']`                       |
+| `wrapInDecApi(url, payload)` on the master only   | `manifest.rebaseFromQuery('url')`                 |
+| per-host `Origin`/`Referer` switching             | `headersByHost`                                   |
 
 **Anything dynamic — a scraped key, a minted token — is computed in `resolve()`
 and travels as data.** That is the split: JavaScript on the metadata path, once
@@ -165,9 +165,9 @@ reaching for `segment-transform-js` — the vocabulary is meant to grow, and
 The single highest-value change you can make while porting.
 
 ```ts
-throw new SourceChangedError('the episode list payload', url);   // shape moved
-throw new NotFoundError('This show has no episodes yet.');       // genuinely empty
-throw new NetworkError('502 from the API', 502);                 // retryable
+throw new SourceChangedError('the episode list payload', url); // shape moved
+throw new NotFoundError('This show has no episodes yet.'); // genuinely empty
+throw new NetworkError('502 from the API', 502); // retryable
 ```
 
 Kotlin extensions overwhelmingly `return emptyList()` on a parse failure, which

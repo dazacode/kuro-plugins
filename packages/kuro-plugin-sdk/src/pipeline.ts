@@ -143,7 +143,9 @@ export const ops = {
 	},
 
 	/** `assertByte(0, TS_SYNC_BYTE, …)` — the check almost every HLS source wants. */
-	assertMpegTs(because = 'The stream did not decode. This source may have changed its key.'): SegmentOp {
+	assertMpegTs(
+		because = 'The stream did not decode. This source may have changed its key.'
+	): SegmentOp {
 		return ops.assertByte(0, TS_SYNC_BYTE, because);
 	}
 } as const;

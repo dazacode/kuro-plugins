@@ -241,7 +241,10 @@ export function validateManifest(manifest: Manifest): Diagnostic[] {
 		if (setting.type === 'select' || setting.type === 'multiselect') {
 			const values = (setting.options ?? []).map((option) => option.value);
 			if (values.length === 0) {
-				error('setting_options_missing', `Setting "${setting.id}" is a ${setting.type} with no options.`);
+				error(
+					'setting_options_missing',
+					`Setting "${setting.id}" is a ${setting.type} with no options.`
+				);
 			}
 			// A default outside the options renders as a blank control the user
 			// cannot restore once they change it.

@@ -1,329 +1,329 @@
 {
-  "$comment": [
-    "Cross-language test vectors for StreamPipeline.segment (ADR-0002 \u00a75.2).",
-    "HAND-AUTHORED DATA. Nothing in tool/ generates this file; it was produced by a third implementation written from contract/plugin-api/ABI.md alone, so that neither executor is validated against itself.",
-    "Both executors must pass every case: lib/core/plugins/segment_pipeline.dart and client-web/src/lib/plugins/segment-pipeline.ts.",
-    "input and output are base64. A case with `throws` must raise that exact message instead of producing output.",
-    "Run each case TWICE: once with the whole input, and once fed in 7-byte chunks. Chunked and whole-buffer execution must agree byte for byte -- that is the property a streaming proxy breaks and a response filter does not.",
-    "lookaheadBytes is the minimum an executor must buffer before emitting; every `at` and every magic in this file fits inside it."
-  ],
-  "lookaheadBytes": 16,
-  "chunkSizeForStreamingCheck": 7,
-  "cases": [
-    {
-      "name": "passthrough",
-      "why": "No ops is the identity. A progressive mp4 declares no pipeline at all and must not be touched.",
-      "input": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg==",
-      "ops": [],
-      "output": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg=="
-    },
-    {
-      "name": "drop-bytes",
-      "why": "The simplest prefix strip, with no magic to match.",
-      "input": "AAECA0cwVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPmOIrdL3HEFmi7DV+h9EaY6z2P0iR2yRttsAJUpvlLneAyhNcpe84QYrUHWav+QJLlN4ncLnDDFWe6DF6g80WX6jyO0SR1yBpsvwFTpfhKnO8xg9Yoes0fYbQGWKr9T5HkNojbLX/CFGa5C12v8kSW6TuN0CJ0xxlrvgBSpPdJm+4wgtUnecweYLMFV6n8TpDjNYfaLH7BE2W4Clyu8UOV6DqM3yFzxhhqvQ9Ro/ZImu0/gdQmeMsdb7IEVqj7TZ/iNIbZK33AEmS3CVut8EKU5zmL3iByxRdpvA5QovVHmew+gNMld8ocbrEDVaf6TJ7hM4XYKnzPEWO2CFqs/0GT4=",
-      "ops": [
-        {
-          "kind": "drop-bytes",
-          "count": 4
-        }
-      ],
-      "output": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg=="
-    },
-    {
-      "name": "xor-repeating-key-wraps",
-      "why": "The key repeats across a payload longer than itself; the counter must be continuous, which is what a chunked implementation gets wrong.",
-      "input": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg==",
-      "ops": [
-        {
-          "kind": "xor-repeating",
-          "key": "nSrxR7OOXHCmGeQ72GIPxQ=="
-        }
-      ],
-      "output": "2hqkPSxKtX6VQZmZH44e88aqVI1cmmUuJbEpyc9ebkM2+gRdjOrV3nXh+Xm/7r4TZgq0LTw6hY6FUYmpb74O49ZaZP1sinU+1YFZ2d9OXrMG6hRNnNol7mXx6QmPHq4DdjrEHcwqlZ61Ibm5f67+06ZKdO18ekVOxZFJ6S9+TqMWmiS9rMo1/hXBGRmfDp5zRirUDdwa5a6lMalJT97uw7Z6hN0MalVe9WF5+T9uPpPmijStvLoFDgXRCSmfPo5jVtrkfewK9b5VAdlZX87eM4ZqlM0cWqVu5XFpiQ+eLoP2ukSdTKoVHjWhOTn/Ln5TJsr0bfz6xc5FEclpr/7OI5YapD0sSrV+lUGZmR+OHvPGqlSNXJplLiWxKcnPXm5DNvoEXYzq1d514fl5v+6+E2YKtC08OoWOhVGJqW++DuPWWmT9bIp1PtWBWdnfTl6zBuoUTZzaJe5l8ekJjx6uA3Y6xB3MKpWetSG5uX+u/tOmSnTtfHpFTg=="
-    },
-    {
-      "name": "xor-is-an-involution",
-      "why": "Applying the same key twice returns the input. Cheap, and it catches an executor that resets the key index per chunk.",
-      "input": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg==",
-      "ops": [
-        {
-          "kind": "xor-repeating",
-          "key": "nSrxR7OOXHCmGeQ72GIPxQ=="
-        },
-        {
-          "kind": "xor-repeating",
-          "key": "nSrxR7OOXHCmGeQ72GIPxQ=="
-        }
-      ],
-      "output": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg=="
-    },
-    {
-      "name": "xor-single-byte-key",
-      "why": "A one-byte key is the degenerate case of the modulo.",
-      "input": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg==",
-      "ops": [
-        {
-          "kind": "xor-repeating",
-          "key": "Wg=="
-        }
-      ],
-      "output": "HWoPIMWes1RpAif4nbZLbAHa/5C1TmME2fKXqE1mO9zxiq9AZT7T9ImiRxg91uuMoXofMNXug6R5EjfI7YZbfBEqz+CFXnMUKcLnuF12CyzBmr9QdQ4jxJmyV2gNJvucsUpvACX+k7RJYgfY/ZarTGE63/CVrkNkOdL3iK1GGzzR6o+gRR4z1OmCp3gdNsvsgVp/EDXO44RZchcozea7XHEKL8DlvlN0CSLHmL1Wawwh+p+wVW4DJPmSt0gdBtv8kapPYAXe85SpQmc43faLrEEaP9D1jqNEGTLX6I2mexwxyu+ApX4TNMnih1h9FivM4bpfcBUuw+S5UncILcabvFFqDyDFnrNUaQIn+J22S2wB2v+QtU5jBNnyl6hNZjvc8YqvQGU+0/SJokcYPdbrjKF6HzDV7oOkeRI3yO2GW3wRKs/ghV5zFCnC57hddgsswZq/UHUOI8SZsldoDSb7nLFKbwAl/pO0SWIH2P2Wq0xhOt/wla5DZA=="
-    },
-    {
-      "name": "magic-prefix-webp",
-      "why": "A WebP-disguised segment: 12 bytes dropped, then unmasked.",
-      "input": "UklGRgAAAABXRUJQ2hqkPSxKtX6VQZmZH44e88aqVI1cmmUuJbEpyc9ebkM2+gRdjOrV3nXh+Xm/7r4TZgq0LTw6hY6FUYmpb74O49ZaZP1sinU+1YFZ2d9OXrMG6hRNnNol7mXx6QmPHq4DdjrEHcwqlZ61Ibm5f67+06ZKdO18ekVOxZFJ6S9+TqMWmiS9rMo1/hXBGRmfDp5zRirUDdwa5a6lMalJT97uw7Z6hN0MalVe9WF5+T9uPpPmijStvLoFDgXRCSmfPo5jVtrkfewK9b5VAdlZX87eM4ZqlM0cWqVu5XFpiQ+eLoP2ukSdTKoVHjWhOTn/Ln5TJsr0bfz6xc5FEclpr/7OI5YapD0sSrV+lUGZmR+OHvPGqlSNXJplLiWxKcnPXm5DNvoEXYzq1d514fl5v+6+E2YKtC08OoWOhVGJqW++DuPWWmT9bIp1PtWBWdnfTl6zBuoUTZzaJe5l8ekJjx6uA3Y6xB3MKpWetSG5uX+u/tOmSnTtfHpFTg==",
-      "ops": [
-        {
-          "kind": "drop-magic-prefix",
-          "cases": [
-            {
-              "magic": "UklGRg==",
-              "drop": 12
-            },
-            {
-              "magic": "iVBORw0KGgo=",
-              "drop": 8
-            }
-          ]
-        },
-        {
-          "kind": "xor-repeating",
-          "key": "nSrxR7OOXHCmGeQ72GIPxQ==",
-          "unlessByte": {
-            "at": 0,
-            "equals": 71
-          }
-        },
-        {
-          "kind": "assert-byte",
-          "at": 0,
-          "equals": 71,
-          "because": "segment key is stale"
-        }
-      ],
-      "output": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg=="
-    },
-    {
-      "name": "magic-prefix-png",
-      "why": "The same source serves PNG-disguised segments too; 8 bytes, same key.",
-      "input": "iVBORw0KGgraGqQ9LEq1fpVBmZkfjh7zxqpUjVyaZS4lsSnJz15uQzb6BF2M6tXedeH5eb/uvhNmCrQtPDqFjoVRialvvg7j1lpk/WyKdT7VgVnZ305eswbqFE2c2iXuZfHpCY8ergN2OsQdzCqVnrUhubl/rv7Tpkp07Xx6RU7FkUnpL35OoxaaJL2syjX+FcEZGZ8OnnNGKtQN3BrlrqUxqUlP3u7DtnqE3QxqVV71YXn5P24+k+aKNK28ugUOBdEJKZ8+jmNW2uR97Ar1vlUB2Vlfzt4zhmqUzRxapW7lcWmJD54ug/a6RJ1MqhUeNaE5Of8uflMmyvRt/PrFzkURyWmv/s4jlhqkPSxKtX6VQZmZH44e88aqVI1cmmUuJbEpyc9ebkM2+gRdjOrV3nXh+Xm/7r4TZgq0LTw6hY6FUYmpb74O49ZaZP1sinU+1YFZ2d9OXrMG6hRNnNol7mXx6QmPHq4DdjrEHcwqlZ61Ibm5f67+06ZKdO18ekVO",
-      "ops": [
-        {
-          "kind": "drop-magic-prefix",
-          "cases": [
-            {
-              "magic": "UklGRg==",
-              "drop": 12
-            },
-            {
-              "magic": "iVBORw0KGgo=",
-              "drop": 8
-            }
-          ]
-        },
-        {
-          "kind": "xor-repeating",
-          "key": "nSrxR7OOXHCmGeQ72GIPxQ==",
-          "unlessByte": {
-            "at": 0,
-            "equals": 71
-          }
-        },
-        {
-          "kind": "assert-byte",
-          "at": 0,
-          "equals": 71,
-          "because": "segment key is stale"
-        }
-      ],
-      "output": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg=="
-    },
-    {
-      "name": "magic-prefix-none-matches",
-      "why": "An already-plaintext segment: no magic matches, nothing is dropped, and unlessByte suppresses the XOR because byte 0 is already the sync byte.",
-      "input": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg==",
-      "ops": [
-        {
-          "kind": "drop-magic-prefix",
-          "cases": [
-            {
-              "magic": "UklGRg==",
-              "drop": 12
-            },
-            {
-              "magic": "iVBORw0KGgo=",
-              "drop": 8
-            }
-          ]
-        },
-        {
-          "kind": "xor-repeating",
-          "key": "nSrxR7OOXHCmGeQ72GIPxQ==",
-          "unlessByte": {
-            "at": 0,
-            "equals": 71
-          }
-        },
-        {
-          "kind": "assert-byte",
-          "at": 0,
-          "equals": 71,
-          "because": "segment key is stale"
-        }
-      ],
-      "output": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg=="
-    },
-    {
-      "name": "unless-byte-guard-skips",
-      "why": "The guard is what stops a plaintext segment being corrupted by an unconditional XOR.",
-      "input": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg==",
-      "ops": [
-        {
-          "kind": "xor-repeating",
-          "key": "nSrxR7OOXHCmGeQ72GIPxQ==",
-          "unlessByte": {
-            "at": 0,
-            "equals": 71
-          }
-        }
-      ],
-      "output": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg=="
-    },
-    {
-      "name": "unless-byte-guard-fires",
-      "why": "The same op with a guard that does not match must still run.",
-      "input": "2hqkPSxKtX6VQZmZH44e88aqVI1cmmUuJbEpyc9ebkM2+gRdjOrV3nXh+Xm/7r4TZgq0LTw6hY6FUYmpb74O49ZaZP1sinU+1YFZ2d9OXrMG6hRNnNol7mXx6QmPHq4DdjrEHcwqlZ61Ibm5f67+06ZKdO18ekVOxZFJ6S9+TqMWmiS9rMo1/hXBGRmfDp5zRirUDdwa5a6lMalJT97uw7Z6hN0MalVe9WF5+T9uPpPmijStvLoFDgXRCSmfPo5jVtrkfewK9b5VAdlZX87eM4ZqlM0cWqVu5XFpiQ+eLoP2ukSdTKoVHjWhOTn/Ln5TJsr0bfz6xc5FEclpr/7OI5YapD0sSrV+lUGZmR+OHvPGqlSNXJplLiWxKcnPXm5DNvoEXYzq1d514fl5v+6+E2YKtC08OoWOhVGJqW++DuPWWmT9bIp1PtWBWdnfTl6zBuoUTZzaJe5l8ekJjx6uA3Y6xB3MKpWetSG5uX+u/tOmSnTtfHpFTg==",
-      "ops": [
-        {
-          "kind": "xor-repeating",
-          "key": "nSrxR7OOXHCmGeQ72GIPxQ==",
-          "unlessByte": {
-            "at": 0,
-            "equals": 71
-          }
-        }
-      ],
-      "output": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg=="
-    },
-    {
-      "name": "assert-byte-passes",
-      "why": "A correct key leaves the MPEG-TS sync byte in place.",
-      "input": "UklGRgAAAABXRUJQ2hqkPSxKtX6VQZmZH44e88aqVI1cmmUuJbEpyc9ebkM2+gRdjOrV3nXh+Xm/7r4TZgq0LTw6hY6FUYmpb74O49ZaZP1sinU+1YFZ2d9OXrMG6hRNnNol7mXx6QmPHq4DdjrEHcwqlZ61Ibm5f67+06ZKdO18ekVOxZFJ6S9+TqMWmiS9rMo1/hXBGRmfDp5zRirUDdwa5a6lMalJT97uw7Z6hN0MalVe9WF5+T9uPpPmijStvLoFDgXRCSmfPo5jVtrkfewK9b5VAdlZX87eM4ZqlM0cWqVu5XFpiQ+eLoP2ukSdTKoVHjWhOTn/Ln5TJsr0bfz6xc5FEclpr/7OI5YapD0sSrV+lUGZmR+OHvPGqlSNXJplLiWxKcnPXm5DNvoEXYzq1d514fl5v+6+E2YKtC08OoWOhVGJqW++DuPWWmT9bIp1PtWBWdnfTl6zBuoUTZzaJe5l8ekJjx6uA3Y6xB3MKpWetSG5uX+u/tOmSnTtfHpFTg==",
-      "ops": [
-        {
-          "kind": "drop-magic-prefix",
-          "cases": [
-            {
-              "magic": "UklGRg==",
-              "drop": 12
-            },
-            {
-              "magic": "iVBORw0KGgo=",
-              "drop": 8
-            }
-          ]
-        },
-        {
-          "kind": "xor-repeating",
-          "key": "nSrxR7OOXHCmGeQ72GIPxQ==",
-          "unlessByte": {
-            "at": 0,
-            "equals": 71
-          }
-        },
-        {
-          "kind": "assert-byte",
-          "at": 0,
-          "equals": 71,
-          "because": "segment key is stale"
-        }
-      ],
-      "output": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg=="
-    },
-    {
-      "name": "assert-byte-fails-on-stale-key",
-      "why": "The whole reason assert-byte exists: a rotated key would otherwise produce a silent black screen instead of a named failure.",
-      "input": "UklGRgAAAABXRUJQViFEa47V+B8iSWyz1v0AJ0qRtNv+BShPkrnc4wYtcJe6weQLLnWYv8LpDFN2naDH6jFUe56lyO8yWXyDps0QN1phhKvOFThfYoms8xY9QGeK0fQbPkVoj9L5HCNGbbDX+gEkS2612P8CKUyTtt3gBypxlLve5Qgvcpm8w+YNUHeaocTrDlV4n6LJ7DNWfYCnyhE0W36FqM8SOVxjhq3wFzpBZIuu9Rg/QmmM0/YdIEdqsdT7HiVIb7LZ/ANWTZC32uEEK06VuN/iCSxzlr3A5wpRdJu+xegPUnmco8btMFd6gaTL7jVYf4KpzBM2XWCHqvEUO15liK/yGTxDZo3Q9xohRGuO1fgfIklss9b9ACdKkbTb/gUoT5K53OMGLXCXusHkCy51mL/C6QxTdp2gx+oxVHuepcjvMll8g6bNEDdaYYSrzhU4X2KJrPMWPUBnitH0Gz5FaI/S+RwjRm2w1/oBJEtutdj/AilMk7bd4AcqcZS73uUILw==",
-      "ops": [
-        {
-          "kind": "drop-magic-prefix",
-          "cases": [
-            {
-              "magic": "UklGRg==",
-              "drop": 12
-            },
-            {
-              "magic": "iVBORw0KGgo=",
-              "drop": 8
-            }
-          ]
-        },
-        {
-          "kind": "xor-repeating",
-          "key": "nSrxR7OOXHCmGeQ72GIPxQ==",
-          "unlessByte": {
-            "at": 0,
-            "equals": 71
-          }
-        },
-        {
-          "kind": "assert-byte",
-          "at": 0,
-          "equals": 71,
-          "because": "segment key is stale"
-        }
-      ],
-      "throws": "segment key is stale"
-    },
-    {
-      "name": "short-input-under-lookahead",
-      "why": "A segment shorter than the 16-byte lookahead must not crash the executor or hang waiting for bytes that never arrive.",
-      "input": "RwEC",
-      "ops": [
-        {
-          "kind": "assert-byte",
-          "at": 0,
-          "equals": 71,
-          "because": "sync byte missing"
-        }
-      ],
-      "output": "RwEC"
-    },
-    {
-      "name": "empty-input",
-      "why": "A zero-length body is legal and every op must tolerate it.",
-      "input": "",
-      "ops": [
-        {
-          "kind": "drop-magic-prefix",
-          "cases": [
-            {
-              "magic": "UklGRg==",
-              "drop": 12
-            },
-            {
-              "magic": "iVBORw0KGgo=",
-              "drop": 8
-            }
-          ]
-        },
-        {
-          "kind": "xor-repeating",
-          "key": "nSrxR7OOXHCmGeQ72GIPxQ==",
-          "unlessByte": {
-            "at": 0,
-            "equals": 71
-          }
-        },
-        {
-          "kind": "assert-byte",
-          "at": 0,
-          "equals": 71,
-          "because": "segment key is stale"
-        }
-      ],
-      "output": ""
-    }
-  ]
+	"$comment": [
+		"Cross-language test vectors for StreamPipeline.segment (ADR-0002 \u00a75.2).",
+		"HAND-AUTHORED DATA. Nothing in tool/ generates this file; it was produced by a third implementation written from contract/plugin-api/ABI.md alone, so that neither executor is validated against itself.",
+		"Both executors must pass every case: lib/core/plugins/segment_pipeline.dart and client-web/src/lib/plugins/segment-pipeline.ts.",
+		"input and output are base64. A case with `throws` must raise that exact message instead of producing output.",
+		"Run each case TWICE: once with the whole input, and once fed in 7-byte chunks. Chunked and whole-buffer execution must agree byte for byte -- that is the property a streaming proxy breaks and a response filter does not.",
+		"lookaheadBytes is the minimum an executor must buffer before emitting; every `at` and every magic in this file fits inside it."
+	],
+	"lookaheadBytes": 16,
+	"chunkSizeForStreamingCheck": 7,
+	"cases": [
+		{
+			"name": "passthrough",
+			"why": "No ops is the identity. A progressive mp4 declares no pipeline at all and must not be touched.",
+			"input": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg==",
+			"ops": [],
+			"output": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg=="
+		},
+		{
+			"name": "drop-bytes",
+			"why": "The simplest prefix strip, with no magic to match.",
+			"input": "AAECA0cwVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPmOIrdL3HEFmi7DV+h9EaY6z2P0iR2yRttsAJUpvlLneAyhNcpe84QYrUHWav+QJLlN4ncLnDDFWe6DF6g80WX6jyO0SR1yBpsvwFTpfhKnO8xg9Yoes0fYbQGWKr9T5HkNojbLX/CFGa5C12v8kSW6TuN0CJ0xxlrvgBSpPdJm+4wgtUnecweYLMFV6n8TpDjNYfaLH7BE2W4Clyu8UOV6DqM3yFzxhhqvQ9Ro/ZImu0/gdQmeMsdb7IEVqj7TZ/iNIbZK33AEmS3CVut8EKU5zmL3iByxRdpvA5QovVHmew+gNMld8ocbrEDVaf6TJ7hM4XYKnzPEWO2CFqs/0GT4=",
+			"ops": [
+				{
+					"kind": "drop-bytes",
+					"count": 4
+				}
+			],
+			"output": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg=="
+		},
+		{
+			"name": "xor-repeating-key-wraps",
+			"why": "The key repeats across a payload longer than itself; the counter must be continuous, which is what a chunked implementation gets wrong.",
+			"input": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg==",
+			"ops": [
+				{
+					"kind": "xor-repeating",
+					"key": "nSrxR7OOXHCmGeQ72GIPxQ=="
+				}
+			],
+			"output": "2hqkPSxKtX6VQZmZH44e88aqVI1cmmUuJbEpyc9ebkM2+gRdjOrV3nXh+Xm/7r4TZgq0LTw6hY6FUYmpb74O49ZaZP1sinU+1YFZ2d9OXrMG6hRNnNol7mXx6QmPHq4DdjrEHcwqlZ61Ibm5f67+06ZKdO18ekVOxZFJ6S9+TqMWmiS9rMo1/hXBGRmfDp5zRirUDdwa5a6lMalJT97uw7Z6hN0MalVe9WF5+T9uPpPmijStvLoFDgXRCSmfPo5jVtrkfewK9b5VAdlZX87eM4ZqlM0cWqVu5XFpiQ+eLoP2ukSdTKoVHjWhOTn/Ln5TJsr0bfz6xc5FEclpr/7OI5YapD0sSrV+lUGZmR+OHvPGqlSNXJplLiWxKcnPXm5DNvoEXYzq1d514fl5v+6+E2YKtC08OoWOhVGJqW++DuPWWmT9bIp1PtWBWdnfTl6zBuoUTZzaJe5l8ekJjx6uA3Y6xB3MKpWetSG5uX+u/tOmSnTtfHpFTg=="
+		},
+		{
+			"name": "xor-is-an-involution",
+			"why": "Applying the same key twice returns the input. Cheap, and it catches an executor that resets the key index per chunk.",
+			"input": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg==",
+			"ops": [
+				{
+					"kind": "xor-repeating",
+					"key": "nSrxR7OOXHCmGeQ72GIPxQ=="
+				},
+				{
+					"kind": "xor-repeating",
+					"key": "nSrxR7OOXHCmGeQ72GIPxQ=="
+				}
+			],
+			"output": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg=="
+		},
+		{
+			"name": "xor-single-byte-key",
+			"why": "A one-byte key is the degenerate case of the modulo.",
+			"input": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg==",
+			"ops": [
+				{
+					"kind": "xor-repeating",
+					"key": "Wg=="
+				}
+			],
+			"output": "HWoPIMWes1RpAif4nbZLbAHa/5C1TmME2fKXqE1mO9zxiq9AZT7T9ImiRxg91uuMoXofMNXug6R5EjfI7YZbfBEqz+CFXnMUKcLnuF12CyzBmr9QdQ4jxJmyV2gNJvucsUpvACX+k7RJYgfY/ZarTGE63/CVrkNkOdL3iK1GGzzR6o+gRR4z1OmCp3gdNsvsgVp/EDXO44RZchcozea7XHEKL8DlvlN0CSLHmL1Wawwh+p+wVW4DJPmSt0gdBtv8kapPYAXe85SpQmc43faLrEEaP9D1jqNEGTLX6I2mexwxyu+ApX4TNMnih1h9FivM4bpfcBUuw+S5UncILcabvFFqDyDFnrNUaQIn+J22S2wB2v+QtU5jBNnyl6hNZjvc8YqvQGU+0/SJokcYPdbrjKF6HzDV7oOkeRI3yO2GW3wRKs/ghV5zFCnC57hddgsswZq/UHUOI8SZsldoDSb7nLFKbwAl/pO0SWIH2P2Wq0xhOt/wla5DZA=="
+		},
+		{
+			"name": "magic-prefix-webp",
+			"why": "A WebP-disguised segment: 12 bytes dropped, then unmasked.",
+			"input": "UklGRgAAAABXRUJQ2hqkPSxKtX6VQZmZH44e88aqVI1cmmUuJbEpyc9ebkM2+gRdjOrV3nXh+Xm/7r4TZgq0LTw6hY6FUYmpb74O49ZaZP1sinU+1YFZ2d9OXrMG6hRNnNol7mXx6QmPHq4DdjrEHcwqlZ61Ibm5f67+06ZKdO18ekVOxZFJ6S9+TqMWmiS9rMo1/hXBGRmfDp5zRirUDdwa5a6lMalJT97uw7Z6hN0MalVe9WF5+T9uPpPmijStvLoFDgXRCSmfPo5jVtrkfewK9b5VAdlZX87eM4ZqlM0cWqVu5XFpiQ+eLoP2ukSdTKoVHjWhOTn/Ln5TJsr0bfz6xc5FEclpr/7OI5YapD0sSrV+lUGZmR+OHvPGqlSNXJplLiWxKcnPXm5DNvoEXYzq1d514fl5v+6+E2YKtC08OoWOhVGJqW++DuPWWmT9bIp1PtWBWdnfTl6zBuoUTZzaJe5l8ekJjx6uA3Y6xB3MKpWetSG5uX+u/tOmSnTtfHpFTg==",
+			"ops": [
+				{
+					"kind": "drop-magic-prefix",
+					"cases": [
+						{
+							"magic": "UklGRg==",
+							"drop": 12
+						},
+						{
+							"magic": "iVBORw0KGgo=",
+							"drop": 8
+						}
+					]
+				},
+				{
+					"kind": "xor-repeating",
+					"key": "nSrxR7OOXHCmGeQ72GIPxQ==",
+					"unlessByte": {
+						"at": 0,
+						"equals": 71
+					}
+				},
+				{
+					"kind": "assert-byte",
+					"at": 0,
+					"equals": 71,
+					"because": "segment key is stale"
+				}
+			],
+			"output": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg=="
+		},
+		{
+			"name": "magic-prefix-png",
+			"why": "The same source serves PNG-disguised segments too; 8 bytes, same key.",
+			"input": "iVBORw0KGgraGqQ9LEq1fpVBmZkfjh7zxqpUjVyaZS4lsSnJz15uQzb6BF2M6tXedeH5eb/uvhNmCrQtPDqFjoVRialvvg7j1lpk/WyKdT7VgVnZ305eswbqFE2c2iXuZfHpCY8ergN2OsQdzCqVnrUhubl/rv7Tpkp07Xx6RU7FkUnpL35OoxaaJL2syjX+FcEZGZ8OnnNGKtQN3BrlrqUxqUlP3u7DtnqE3QxqVV71YXn5P24+k+aKNK28ugUOBdEJKZ8+jmNW2uR97Ar1vlUB2Vlfzt4zhmqUzRxapW7lcWmJD54ug/a6RJ1MqhUeNaE5Of8uflMmyvRt/PrFzkURyWmv/s4jlhqkPSxKtX6VQZmZH44e88aqVI1cmmUuJbEpyc9ebkM2+gRdjOrV3nXh+Xm/7r4TZgq0LTw6hY6FUYmpb74O49ZaZP1sinU+1YFZ2d9OXrMG6hRNnNol7mXx6QmPHq4DdjrEHcwqlZ61Ibm5f67+06ZKdO18ekVO",
+			"ops": [
+				{
+					"kind": "drop-magic-prefix",
+					"cases": [
+						{
+							"magic": "UklGRg==",
+							"drop": 12
+						},
+						{
+							"magic": "iVBORw0KGgo=",
+							"drop": 8
+						}
+					]
+				},
+				{
+					"kind": "xor-repeating",
+					"key": "nSrxR7OOXHCmGeQ72GIPxQ==",
+					"unlessByte": {
+						"at": 0,
+						"equals": 71
+					}
+				},
+				{
+					"kind": "assert-byte",
+					"at": 0,
+					"equals": 71,
+					"because": "segment key is stale"
+				}
+			],
+			"output": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg=="
+		},
+		{
+			"name": "magic-prefix-none-matches",
+			"why": "An already-plaintext segment: no magic matches, nothing is dropped, and unlessByte suppresses the XOR because byte 0 is already the sync byte.",
+			"input": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg==",
+			"ops": [
+				{
+					"kind": "drop-magic-prefix",
+					"cases": [
+						{
+							"magic": "UklGRg==",
+							"drop": 12
+						},
+						{
+							"magic": "iVBORw0KGgo=",
+							"drop": 8
+						}
+					]
+				},
+				{
+					"kind": "xor-repeating",
+					"key": "nSrxR7OOXHCmGeQ72GIPxQ==",
+					"unlessByte": {
+						"at": 0,
+						"equals": 71
+					}
+				},
+				{
+					"kind": "assert-byte",
+					"at": 0,
+					"equals": 71,
+					"because": "segment key is stale"
+				}
+			],
+			"output": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg=="
+		},
+		{
+			"name": "unless-byte-guard-skips",
+			"why": "The guard is what stops a plaintext segment being corrupted by an unconditional XOR.",
+			"input": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg==",
+			"ops": [
+				{
+					"kind": "xor-repeating",
+					"key": "nSrxR7OOXHCmGeQ72GIPxQ==",
+					"unlessByte": {
+						"at": 0,
+						"equals": 71
+					}
+				}
+			],
+			"output": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg=="
+		},
+		{
+			"name": "unless-byte-guard-fires",
+			"why": "The same op with a guard that does not match must still run.",
+			"input": "2hqkPSxKtX6VQZmZH44e88aqVI1cmmUuJbEpyc9ebkM2+gRdjOrV3nXh+Xm/7r4TZgq0LTw6hY6FUYmpb74O49ZaZP1sinU+1YFZ2d9OXrMG6hRNnNol7mXx6QmPHq4DdjrEHcwqlZ61Ibm5f67+06ZKdO18ekVOxZFJ6S9+TqMWmiS9rMo1/hXBGRmfDp5zRirUDdwa5a6lMalJT97uw7Z6hN0MalVe9WF5+T9uPpPmijStvLoFDgXRCSmfPo5jVtrkfewK9b5VAdlZX87eM4ZqlM0cWqVu5XFpiQ+eLoP2ukSdTKoVHjWhOTn/Ln5TJsr0bfz6xc5FEclpr/7OI5YapD0sSrV+lUGZmR+OHvPGqlSNXJplLiWxKcnPXm5DNvoEXYzq1d514fl5v+6+E2YKtC08OoWOhVGJqW++DuPWWmT9bIp1PtWBWdnfTl6zBuoUTZzaJe5l8ekJjx6uA3Y6xB3MKpWetSG5uX+u/tOmSnTtfHpFTg==",
+			"ops": [
+				{
+					"kind": "xor-repeating",
+					"key": "nSrxR7OOXHCmGeQ72GIPxQ==",
+					"unlessByte": {
+						"at": 0,
+						"equals": 71
+					}
+				}
+			],
+			"output": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg=="
+		},
+		{
+			"name": "assert-byte-passes",
+			"why": "A correct key leaves the MPEG-TS sync byte in place.",
+			"input": "UklGRgAAAABXRUJQ2hqkPSxKtX6VQZmZH44e88aqVI1cmmUuJbEpyc9ebkM2+gRdjOrV3nXh+Xm/7r4TZgq0LTw6hY6FUYmpb74O49ZaZP1sinU+1YFZ2d9OXrMG6hRNnNol7mXx6QmPHq4DdjrEHcwqlZ61Ibm5f67+06ZKdO18ekVOxZFJ6S9+TqMWmiS9rMo1/hXBGRmfDp5zRirUDdwa5a6lMalJT97uw7Z6hN0MalVe9WF5+T9uPpPmijStvLoFDgXRCSmfPo5jVtrkfewK9b5VAdlZX87eM4ZqlM0cWqVu5XFpiQ+eLoP2ukSdTKoVHjWhOTn/Ln5TJsr0bfz6xc5FEclpr/7OI5YapD0sSrV+lUGZmR+OHvPGqlSNXJplLiWxKcnPXm5DNvoEXYzq1d514fl5v+6+E2YKtC08OoWOhVGJqW++DuPWWmT9bIp1PtWBWdnfTl6zBuoUTZzaJe5l8ekJjx6uA3Y6xB3MKpWetSG5uX+u/tOmSnTtfHpFTg==",
+			"ops": [
+				{
+					"kind": "drop-magic-prefix",
+					"cases": [
+						{
+							"magic": "UklGRg==",
+							"drop": 12
+						},
+						{
+							"magic": "iVBORw0KGgo=",
+							"drop": 8
+						}
+					]
+				},
+				{
+					"kind": "xor-repeating",
+					"key": "nSrxR7OOXHCmGeQ72GIPxQ==",
+					"unlessByte": {
+						"at": 0,
+						"equals": 71
+					}
+				},
+				{
+					"kind": "assert-byte",
+					"at": 0,
+					"equals": 71,
+					"because": "segment key is stale"
+				}
+			],
+			"output": "RzBVep/E6Q4zWH2ix+wRNluApcrvFDleg6jN8hc8YYar0PUaP2SJrtP4HUJnjLHW+yBFao+02f4jSG2St9wBJktwlbrfBClOc5i94gcsUXabwOUKL1R5nsPoDTJXfKHG6xA1Wn+kye4TOF2Cp8zxFjtgharP9Bk+Y4it0vccQWaLsNX6H0RpjrPY/SJHbJG22wAlSm+Uud4DKE1yl7zhBitQdZq/5AkuU3idwucMMVZ7oMXqDzRZfqPI7RJHXIGmy/AVOl+Eqc7zGD1ih6zR9htAZYqv1PkeQ2iNstf8IUZrkLXa/yRJbpO43QInTHGWu+AFKk90mb7jCC1Sd5zB5gswVXqfxOkOM1h9osfsETZbgKXK7xQ5XoOozfIXPGGGq9D1Gj9kia7T+B1CZ4yx1vsgRWqPtNn+I0htkrfcASZLcJW63wQpTnOYveIHLFF2m8DlCi9UeZ7D6A0yV3yhxusQNVp/pMnuEzhdgqfM8RY7YIWqz/QZPg=="
+		},
+		{
+			"name": "assert-byte-fails-on-stale-key",
+			"why": "The whole reason assert-byte exists: a rotated key would otherwise produce a silent black screen instead of a named failure.",
+			"input": "UklGRgAAAABXRUJQViFEa47V+B8iSWyz1v0AJ0qRtNv+BShPkrnc4wYtcJe6weQLLnWYv8LpDFN2naDH6jFUe56lyO8yWXyDps0QN1phhKvOFThfYoms8xY9QGeK0fQbPkVoj9L5HCNGbbDX+gEkS2612P8CKUyTtt3gBypxlLve5Qgvcpm8w+YNUHeaocTrDlV4n6LJ7DNWfYCnyhE0W36FqM8SOVxjhq3wFzpBZIuu9Rg/QmmM0/YdIEdqsdT7HiVIb7LZ/ANWTZC32uEEK06VuN/iCSxzlr3A5wpRdJu+xegPUnmco8btMFd6gaTL7jVYf4KpzBM2XWCHqvEUO15liK/yGTxDZo3Q9xohRGuO1fgfIklss9b9ACdKkbTb/gUoT5K53OMGLXCXusHkCy51mL/C6QxTdp2gx+oxVHuepcjvMll8g6bNEDdaYYSrzhU4X2KJrPMWPUBnitH0Gz5FaI/S+RwjRm2w1/oBJEtutdj/AilMk7bd4AcqcZS73uUILw==",
+			"ops": [
+				{
+					"kind": "drop-magic-prefix",
+					"cases": [
+						{
+							"magic": "UklGRg==",
+							"drop": 12
+						},
+						{
+							"magic": "iVBORw0KGgo=",
+							"drop": 8
+						}
+					]
+				},
+				{
+					"kind": "xor-repeating",
+					"key": "nSrxR7OOXHCmGeQ72GIPxQ==",
+					"unlessByte": {
+						"at": 0,
+						"equals": 71
+					}
+				},
+				{
+					"kind": "assert-byte",
+					"at": 0,
+					"equals": 71,
+					"because": "segment key is stale"
+				}
+			],
+			"throws": "segment key is stale"
+		},
+		{
+			"name": "short-input-under-lookahead",
+			"why": "A segment shorter than the 16-byte lookahead must not crash the executor or hang waiting for bytes that never arrive.",
+			"input": "RwEC",
+			"ops": [
+				{
+					"kind": "assert-byte",
+					"at": 0,
+					"equals": 71,
+					"because": "sync byte missing"
+				}
+			],
+			"output": "RwEC"
+		},
+		{
+			"name": "empty-input",
+			"why": "A zero-length body is legal and every op must tolerate it.",
+			"input": "",
+			"ops": [
+				{
+					"kind": "drop-magic-prefix",
+					"cases": [
+						{
+							"magic": "UklGRg==",
+							"drop": 12
+						},
+						{
+							"magic": "iVBORw0KGgo=",
+							"drop": 8
+						}
+					]
+				},
+				{
+					"kind": "xor-repeating",
+					"key": "nSrxR7OOXHCmGeQ72GIPxQ==",
+					"unlessByte": {
+						"at": 0,
+						"equals": 71
+					}
+				},
+				{
+					"kind": "assert-byte",
+					"at": 0,
+					"equals": 71,
+					"because": "segment key is stale"
+				}
+			],
+			"output": ""
+		}
+	]
 }

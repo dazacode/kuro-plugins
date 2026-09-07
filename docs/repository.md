@@ -10,9 +10,9 @@ with **zero** repositories configured, and a user adds every one themselves.
 
 ## 1. Two ways in, deliberately
 
-| | What it is | When |
-| --- | --- | --- |
-| **Sideload** | A `.kuroplugin` file the user opens | Developing, or a plugin nobody publishes |
+|                | What it is                                   | When                                              |
+| -------------- | -------------------------------------------- | ------------------------------------------------- |
+| **Sideload**   | A `.kuroplugin` file the user opens          | Developing, or a plugin nobody publishes          |
 | **Repository** | A URL the user adds, holding an `index.json` | Everything else, and the only one that can update |
 
 Both end in the same verification and the same consent screen. A repository is
@@ -28,35 +28,35 @@ difference between a client and a distributor.
 
 ```json
 {
-  "schemaVersion": 1,
-  "name": "Example plugins",
-  "updatedAt": "2026-09-07",
-  "signingKey": "MCowBQYDK2VwAyEA…",
-  "plugins": [
-    {
-      "id": "com.example.plugins.example",
-      "name": "Example",
-      "description": "…",
-      "version": "1.0.0",
-      "author": "Example Co",
-      "license": "Apache-2.0",
-      "kuroPluginApi": 1,
-      "minimumKuroVersion": "0.1.0",
-      "platforms": ["android", "ios", "macos", "windows", "linux", "web"],
-      "capabilities": ["search", "episodes", "resolve"],
-      "permissions": ["network", "storage"],
-      "hosts": ["api.example.com", "*.cdn.example.com"],
-      "language": "en",
-      "download": "https://…/example-1.0.0.kuroplugin",
-      "sha256": "9f2c8a1d…",
-      "size": 41231
-    }
-  ]
+	"schemaVersion": 1,
+	"name": "Example plugins",
+	"updatedAt": "2026-09-07",
+	"signingKey": "MCowBQYDK2VwAyEA…",
+	"plugins": [
+		{
+			"id": "com.example.plugins.example",
+			"name": "Example",
+			"description": "…",
+			"version": "1.0.0",
+			"author": "Example Co",
+			"license": "Apache-2.0",
+			"kuroPluginApi": 1,
+			"minimumKuroVersion": "0.1.0",
+			"platforms": ["android", "ios", "macos", "windows", "linux", "web"],
+			"capabilities": ["search", "episodes", "resolve"],
+			"permissions": ["network", "storage"],
+			"hosts": ["api.example.com", "*.cdn.example.com"],
+			"language": "en",
+			"download": "https://…/example-1.0.0.kuroplugin",
+			"sha256": "9f2c8a1d…",
+			"size": 41231
+		}
+	]
 }
 ```
 
 Everything the **consent screen** needs is in the index, so a user decides
-whether to install *before* anything is downloaded. `permissions` and `hosts`
+whether to install _before_ anything is downloaded. `permissions` and `hosts`
 in particular: "this plugin may talk to these six hosts and nothing else" is the
 one sentence that makes an informed answer possible, and asking after the
 download has already happened is asking too late.
@@ -82,8 +82,8 @@ returns a valid index:
    `https://raw.githubusercontent.com/<owner>/<repo>/<default branch>/index.json`
    and its `dist/` variant, **then** the latest release's `index.json` asset.
 
-**That ordering is load-bearing, and the reason is CORS.** A GitHub *release
-asset* is served with no `Access-Control-Allow-Origin` header at all, so a
+**That ordering is load-bearing, and the reason is CORS.** A GitHub _release
+asset_ is served with no `Access-Control-Allow-Origin` header at all, so a
 browser `fetch` for one is blocked before the client sees a byte;
 `raw.githubusercontent.com` sends `access-control-allow-origin: *`. Putting the
 release asset first would produce a repository that adds fine on the five
@@ -137,7 +137,7 @@ In order, and every step aborts the install rather than warning:
 ## 5. Trust, honestly
 
 Signing is real: `kuro package --key` produces an Ed25519 signature and the host
-verifies it. What signing does *not* answer on its own is **which key**, and an
+verifies it. What signing does _not_ answer on its own is **which key**, and an
 app-store-style answer (a curated list, a key server, a review process) is a
 thing this project does not have and should not pretend to.
 

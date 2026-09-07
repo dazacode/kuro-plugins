@@ -22,7 +22,12 @@
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
-import { createHash, generateKeyPairSync, verify as verifyBytes, createPublicKey } from 'node:crypto';
+import {
+	createHash,
+	generateKeyPairSync,
+	verify as verifyBytes,
+	createPublicKey
+} from 'node:crypto';
 
 import { buildIndex, writeIndex } from './index-file';
 import { packagePlugin, bundlePlugin } from './package';
