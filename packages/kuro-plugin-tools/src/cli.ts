@@ -24,6 +24,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { createHash, generateKeyPairSync, verify as verifyBytes, createPublicKey } from 'node:crypto';
 
+import { buildIndex, writeIndex } from './index-file';
 import { packagePlugin, bundlePlugin } from './package';
 import { validatePlugin } from './validate';
 
@@ -63,6 +64,9 @@ switch (command) {
 	case 'test':
 		await cmdTest();
 		break;
+	case 'index':
+		cmdIndex();
+		break;
 	case 'keygen':
 		cmdKeygen();
 		break;
@@ -83,6 +87,7 @@ function usage(): never {
 			'  bundle <plugin> [--out d]  build the single ES module the host loads',
 			'  package <plugin> [--key f] write a deterministic .kuroplugin',
 			'  verify <archive> [--key f] check integrity, and signature if a key is given',
+			'  index --base-url <url>     write dist/index.json for a repository',
 			'  keygen [--out dir]         make an Ed25519 signing key pair',
 			'  new <name>                 scaffold a plugin',
 			''
@@ -185,6 +190,37 @@ async function cmdTest(): Promise<void> {
 		env: { ...process.env, ...(recording ? { KURO_CASSETTE: 'record' } : {}) }
 	});
 	process.exit(await proc.exited);
+}
+
+function cmdIndex(): void {
+	const baseUrl = valueOf('--base-url') ?? fail('index needs --base-url.');
+	if (!baseUrl.startsWith('https://')) {
+		// https at every hop, including this one. A cleartext index is one
+		// anybody on the path can rewrite, and rewriting an index is enough to
+		// install anything.
+		fail('--base-url must be https. See contract/plugin-api/REPOSITORY.md.');
+	}
+	const keyPath = valueOf('--key');
+	const dist = valueOf('--out') ?? join(ROOT, 'dist');
+
+	const index = buildIndex({
+		pluginsDirectory: PLUGINS,
+		distDirectory: dist,
+		baseUrl,
+		name: valueOf('--name') ?? 'kuro plugins',
+		...(keyPath === undefined ? {} : { publicKeyPem: readFileSync(keyPath, 'utf8') })
+	});
+
+	const path = join(dist, 'index.json');
+	writeIndex(index, path);
+
+	console.log(path);
+	for (const plugin of index.plugins) {
+		console.log(`  ${plugin.id}  ${plugin.version}  ${plugin.hosts.length} host(s)`);
+	}
+	if (index.signingKey === undefined) {
+		console.log('  note    unsigned. Clients will install on integrity alone and say so.');
+	}
 }
 
 function cmdKeygen(): void {
