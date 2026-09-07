@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "id": "app.kuro.plugins.reanime",
+  "name": "Re:ANIME",
+  "description": "Ported from the Aniyomi Kotlin extension. Its CDN disguises HLS segments as images and masks them with a rotating XOR key, which the original solved by starting an HTTP server inside the app; here that is four declarative ops.",
+  "version": "0.1.0",
+  "author": { "name": "kuro" },
+  "license": "Apache-2.0",
+  "kuroPluginApi": 1,
+  "minimumKuroVersion": "0.1.0",
+  "platforms": ["android", "ios", "macos", "windows", "linux", "web"],
+  "capabilities": ["search", "episodes", "resolve", "browse"],
+  "permissions": ["network", "storage"],
+  "entrypoint": "reanime",
+  "language": "en",
+  "network": {
+    "hosts": [
+      "reanime.to",
+      "reanime.cz",
+      "reanime.wtf",
+      "flixcloud.cc",
+      "*.flixcloud.cc",
+      "enc-dec.app"
+    ]
+  },
+  "timeouts": { "requestMs": 15000, "operationMs": 45000 },
+  "settings": [
+    {
+      "id": "domain",
+      "type": "select",
+      "label": "Preferred domain",
+      "help": "All mirrors serve the same catalogue. Switch if one stops resolving.",
+      "default": "https://reanime.to",
+      "options": [
+        { "value": "https://reanime.to", "label": "reanime.to" },
+        { "value": "https://reanime.cz", "label": "reanime.cz" },
+        { "value": "https://reanime.wtf", "label": "reanime.wtf" }
+      ]
+    },
+    {
+      "id": "title_language",
+      "type": "select",
+      "label": "Title language",
+      "default": "romaji",
+      "options": [
+        { "value": "romaji", "label": "Romaji" },
+        { "value": "english", "label": "English" },
+        { "value": "native", "label": "Japanese (native)" }
+      ]
+    },
+    {
+      "id": "latest_type",
+      "type": "select",
+      "label": "Latest shelf shows",
+      "default": "",
+      "options": [
+        { "value": "", "label": "All" },
+        { "value": "sub", "label": "Subtitled only" },
+        { "value": "dub", "label": "Dubbed only" }
+      ]
+    },
+    {
+      "id": "quality",
+      "type": "select",
+      "label": "Preferred quality",
+      "help": "The player still adapts; this decides which mirror is offered first.",
+      "default": "1080",
+      "options": [
+        { "value": "1080", "label": "1080p" },
+        { "value": "720", "label": "720p" },
+        { "value": "360", "label": "360p" }
+      ]
+    },
+    {
+      "id": "audio",
+      "type": "select",
+      "label": "Preferred audio",
+      "default": "sub",
+      "options": [
+        { "value": "sub", "label": "Subtitled" },
+        { "value": "dub", "label": "Dubbed" }
+      ]
+    },
+    {
+      "id": "server",
+      "type": "select",
+      "label": "Preferred server",
+      "default": "HD-1",
+      "options": [
+        { "value": "HD-1", "label": "HD-1" },
+        { "value": "HD-2", "label": "HD-2" }
+      ]
+    },
+    {
+      "id": "excluded_servers",
+      "type": "multiselect",
+      "label": "Hide servers",
+      "help": "Mirrors selected here are never offered.",
+      "default": [],
+      "options": [
+        { "value": "HD-1", "label": "HD-1" },
+        { "value": "HD-2", "label": "HD-2" }
+      ]
+    },
+    {
+      "id": "excluded_audio",
+      "type": "multiselect",
+      "label": "Hide audio types",
+      "default": [],
+      "options": [
+        { "value": "sub", "label": "Subtitled" },
+        { "value": "dub", "label": "Dubbed" }
+      ]
+    },
+    {
+      "id": "hide_filler",
+      "type": "switch",
+      "label": "Hide filler episodes",
+      "default": false
+    }
+  ],
+  "keywords": ["anime", "hls"]
+}

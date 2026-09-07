@@ -1,0 +1,95 @@
+{
+  "recordedAt": "2026-09-07",
+  "entries": [
+    {
+      "key": "GET https://flixcloud.cc/_app/immutable/chunks/hls.js.Bx9k2.js #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://flixcloud.cc/_app/immutable/chunks/hls.js.Bx9k2.js",
+      "status": 200,
+      "headers": {
+        "content-type": "text/javascript"
+      },
+      "body": "!function(){var e=1;for(var f=[157,42,241,71,179,142,92,112,166,25,228,59,216,98,15,197],n=0;n<16;n++)e^=f[n];return e}();"
+    },
+    {
+      "key": "GET https://flixcloud.cc/api/m3u8/tok-1 #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://flixcloud.cc/api/m3u8/tok-1",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": "{\"enc\": \"blob-1\"}"
+    },
+    {
+      "key": "GET https://flixcloud.cc/e/aaa111 #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://flixcloud.cc/e/aaa111",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html"
+      },
+      "body": "<!doctype html><html><head><link rel=\"modulepreload\" href=\"/_app/immutable/chunks/hls.js.Bx9k2.js\"></head><body><script>push({ type: \"data\", data: { stream_id: \"s-abc\", server: \"hd1\", subtitles: [ { url: \"https://flixcloud.cc/subtitles/en.vtt\", language: \"en\" }, { url: \"https://flixcloud.cc/subtitles/es.ass\", language: \"es\" }, ], intro_chapter: { start: 85, end: 175 }, outro_chapter: { start: 1320, end: 1410 }, legacy: undefined, } , uses: {} });</script></body></html>"
+    },
+    {
+      "key": "GET https://flixcloud.cc/e/bbb222 #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://flixcloud.cc/e/bbb222",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html"
+      },
+      "body": "<!doctype html><html><head><link rel=\"modulepreload\" href=\"/_app/immutable/chunks/hls.js.Bx9k2.js\"></head><body><script>push({ type: \"data\", data: { stream_id: \"s-abc\", server: \"hd1\", subtitles: [ { url: \"https://flixcloud.cc/subtitles/en.vtt\", language: \"en\" }, { url: \"https://flixcloud.cc/subtitles/es.ass\", language: \"es\" }, ], intro_chapter: { start: 85, end: 175 }, outro_chapter: { start: 1320, end: 1410 }, legacy: undefined, } , uses: {} });</script></body></html>"
+    },
+    {
+      "key": "GET https://reanime.to/api/flix/12345/3 #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://reanime.to/api/flix/12345/3",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": "{\"success\": true, \"servers\": [{\"serverName\": \"HD-1\", \"dataLink\": \"https://flixcloud.cc/e/aaa111\", \"dataType\": \"sub\", \"softsub\": false}, {\"serverName\": \"HD-2\", \"dataLink\": \"https://flixcloud.cc/e/bbb222\", \"dataType\": \"dub\", \"softsub\": true}]}"
+    },
+    {
+      "key": "GET https://reanime.to/api/flix/12345/99 #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://reanime.to/api/flix/12345/99",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": "{\"success\": true, \"servers\": []}"
+    },
+    {
+      "key": "GET https://reanime.to/api/v1/anime/lantern-hours #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://reanime.to/api/v1/anime/lantern-hours",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": "{\"anime_id\": \"lantern-hours\", \"title\": {\"romaji\": \"Lantern Hours\", \"english\": \"Lantern Hours\", \"native\": \"\\u30e9\\u30f3\\u30bf\\u30f3\"}, \"cover_image\": {\"extraLarge\": \"https://reanime.to/img/lantern-hours-xl.jpg\", \"large\": \"https://reanime.to/img/lantern-hours-l.jpg\", \"medium\": null}, \"description\": \"<p>A <i>synopsis</i>.<br>Second line.</p>\", \"status\": \"FINISHED\", \"genres\": [\"Drama\", \"Slice of Life\"], \"anilist_id\": 12345, \"subbed\": 12, \"dubbed\": 8, \"seasonYear\": 2024, \"episodes\": 12}"
+    },
+    {
+      "key": "POST https://enc-dec.app/api/dec-flixcloud?type=stream #03f5fde089bb",
+      "method": "POST",
+      "url": "https://enc-dec.app/api/dec-flixcloud?type=stream",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": "{\"status\": 200, \"result\": {\"stream\": \"https://flixcloud.cc/hls/s-abc/master.m3u8?token=tok-1\", \"context\": {\"w_payload\": \"wp-1\"}}}"
+    },
+    {
+      "key": "POST https://enc-dec.app/api/dec-flixcloud?type=token #9575afd8d456",
+      "method": "POST",
+      "url": "https://enc-dec.app/api/dec-flixcloud?type=token",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": "{\"status\": 200, \"result\": {\"token\": \"tok-1\", \"context\": {\"c\": \"ctx-1\"}}}"
+    }
+  ]
+}

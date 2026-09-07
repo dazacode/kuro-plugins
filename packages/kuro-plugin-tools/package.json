@@ -1,0 +1,8 @@
+{
+  "name": "@kuro/plugin-tools",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": { "kuro": "./src/cli.ts" },
+  "exports": { ".": "./src/cli.ts" },
+  "license": "Apache-2.0"
+}

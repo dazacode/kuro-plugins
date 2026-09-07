@@ -1,0 +1,35 @@
+{
+  "recordedAt": "2026-09-07",
+  "entries": [
+    {
+      "key": "GET https://reanime.to/api/v1/search?limit=36&offset=0&q=broken #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://reanime.to/api/v1/search?limit=36&offset=0&q=broken",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": "{\"limit\": 36, \"offset\": 0, \"total\": 1, \"results\": [{\"anime_id\": \"no-title\", \"title\": null, \"status\": \"FINISHED\"}]}"
+    },
+    {
+      "key": "GET https://reanime.to/api/v1/search?limit=36&offset=0&q=lantern #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://reanime.to/api/v1/search?limit=36&offset=0&q=lantern",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": "{\"limit\": 36, \"offset\": 0, \"total\": 2, \"results\": [{\"anime_id\": \"lantern-hours\", \"title\": {\"romaji\": \"Lantern Hours\", \"english\": \"Lantern Hours\", \"native\": \"\\u30e9\\u30f3\\u30bf\\u30f3\"}, \"cover_image\": {\"extraLarge\": \"https://reanime.to/img/lantern-hours-xl.jpg\", \"large\": \"https://reanime.to/img/lantern-hours-l.jpg\", \"medium\": null}, \"description\": \"<p>A <i>synopsis</i>.<br>Second line.</p>\", \"status\": \"FINISHED\", \"genres\": [\"Drama\", \"Slice of Life\"]}, {\"anime_id\": \"lantern-hours-2\", \"title\": {\"romaji\": \"Lantern Hours II\", \"english\": \"Lantern Hours 2\", \"native\": \"\\u30e9\\u30f3\\u30bf\\u30f3\"}, \"cover_image\": {\"extraLarge\": \"https://reanime.to/img/lantern-hours-2-xl.jpg\", \"large\": \"https://reanime.to/img/lantern-hours-2-l.jpg\", \"medium\": null}, \"description\": \"<p>A <i>synopsis</i>.<br>Second line.</p>\", \"status\": \"RELEASING\", \"genres\": [\"Drama\", \"Slice of Life\"]}]}"
+    },
+    {
+      "key": "GET https://reanime.to/api/v1/search?limit=36&offset=0&q=zzzznothing #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://reanime.to/api/v1/search?limit=36&offset=0&q=zzzznothing",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": "{\"limit\": 36, \"offset\": 0, \"total\": 0, \"results\": []}"
+    }
+  ]
+}

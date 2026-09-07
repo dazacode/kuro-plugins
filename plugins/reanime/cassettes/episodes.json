@@ -1,0 +1,55 @@
+{
+  "recordedAt": "2026-09-07",
+  "entries": [
+    {
+      "key": "GET https://reanime.to/api/v1/anime/lantern-hours #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://reanime.to/api/v1/anime/lantern-hours",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": "{\"anime_id\": \"lantern-hours\", \"title\": {\"romaji\": \"Lantern Hours\", \"english\": \"Lantern Hours\", \"native\": \"\\u30e9\\u30f3\\u30bf\\u30f3\"}, \"cover_image\": {\"extraLarge\": \"https://reanime.to/img/lantern-hours-xl.jpg\", \"large\": \"https://reanime.to/img/lantern-hours-l.jpg\", \"medium\": null}, \"description\": \"<p>A <i>synopsis</i>.<br>Second line.</p>\", \"status\": \"FINISHED\", \"genres\": [\"Drama\", \"Slice of Life\"], \"anilist_id\": 12345, \"subbed\": 12, \"dubbed\": 8, \"seasonYear\": 2024, \"episodes\": 12}"
+    },
+    {
+      "key": "GET https://reanime.to/api/v1/anime/lantern-hours/episodes?limit=2000 #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://reanime.to/api/v1/anime/lantern-hours/episodes?limit=2000",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": "{\"data\": [{\"episodeId\": \"ep-1\", \"episode_number\": 1, \"title\": \"Episode 1\", \"title_romanji\": \"Dai 1 wa\", \"title_japanese\": \"\\u7b2c1\\u8a71\", \"aired\": \"2024-01-01T14:00:00\", \"is_filler\": false, \"is_recap\": false}, {\"episodeId\": \"ep-2\", \"episode_number\": 2, \"title\": \"Episode 2\", \"title_romanji\": \"Dai 2 wa\", \"title_japanese\": \"\\u7b2c2\\u8a71\", \"aired\": \"2024-01-02T14:00:00\", \"is_filler\": false, \"is_recap\": false}, {\"episodeId\": \"ep-3\", \"episode_number\": 3, \"title\": \"Episode 3\", \"title_romanji\": \"Dai 3 wa\", \"title_japanese\": \"\\u7b2c3\\u8a71\", \"aired\": \"2024-01-03T14:00:00\", \"is_filler\": false, \"is_recap\": false}, {\"episodeId\": \"ep-4\", \"episode_number\": 4, \"title\": \"Episode 4\", \"title_romanji\": \"Dai 4 wa\", \"title_japanese\": \"\\u7b2c4\\u8a71\", \"aired\": \"2024-01-04T14:00:00\", \"is_filler\": false, \"is_recap\": false}, {\"episodeId\": \"ep-5\", \"episode_number\": 5, \"title\": \"Episode 5\", \"title_romanji\": \"Dai 5 wa\", \"title_japanese\": \"\\u7b2c5\\u8a71\", \"aired\": \"2024-01-05T14:00:00\", \"is_filler\": false, \"is_recap\": false}, {\"episodeId\": \"ep-6\", \"episode_number\": 6, \"title\": \"Episode 6\", \"title_romanji\": \"Dai 6 wa\", \"title_japanese\": \"\\u7b2c6\\u8a71\", \"aired\": \"2024-01-06T14:00:00\", \"is_filler\": true, \"is_recap\": false}, {\"episodeId\": \"ep-7\", \"episode_number\": 7, \"title\": \"Episode 7\", \"title_romanji\": \"Dai 7 wa\", \"title_japanese\": \"\\u7b2c7\\u8a71\", \"aired\": \"2024-01-07T14:00:00\", \"is_filler\": true, \"is_recap\": false}, {\"episodeId\": \"ep-8\", \"episode_number\": 8, \"title\": \"Episode 8\", \"title_romanji\": \"Dai 8 wa\", \"title_japanese\": \"\\u7b2c8\\u8a71\", \"aired\": \"2024-01-08T14:00:00\", \"is_filler\": false, \"is_recap\": false}, {\"episodeId\": \"ep-9\", \"episode_number\": 9, \"title\": \"Episode 9\", \"title_romanji\": \"Dai 9 wa\", \"title_japanese\": \"\\u7b2c9\\u8a71\", \"aired\": \"2024-01-09T14:00:00\", \"is_filler\": false, \"is_recap\": false}, {\"episodeId\": \"ep-10\", \"episode_number\": 10, \"title\": \"Episode 10\", \"title_romanji\": \"Dai 10 wa\", \"title_japanese\": \"\\u7b2c10\\u8a71\", \"aired\": \"2024-01-10T14:00:00\", \"is_filler\": false, \"is_recap\": false}, {\"episodeId\": \"ep-11\", \"episode_number\": 11, \"title\": \"Episode 11\", \"title_romanji\": \"Dai 11 wa\", \"title_japanese\": \"\\u7b2c11\\u8a71\", \"aired\": \"2024-01-11T14:00:00\", \"is_filler\": false, \"is_recap\": true}, {\"episodeId\": \"ep-12\", \"episode_number\": 12, \"title\": \"Episode 12\", \"title_romanji\": \"Dai 12 wa\", \"title_japanese\": \"\\u7b2c12\\u8a71\", \"aired\": \"2024-01-12T14:00:00\", \"is_filler\": false, \"is_recap\": false}]}"
+    },
+    {
+      "key": "GET https://reanime.to/api/v1/anime/no-anilist #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://reanime.to/api/v1/anime/no-anilist",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": "{\"anime_id\": \"no-anilist\", \"title\": {\"romaji\": \"Lantern Hours\", \"english\": \"Lantern Hours\", \"native\": \"\\u30e9\\u30f3\\u30bf\\u30f3\"}, \"cover_image\": {\"extraLarge\": \"https://reanime.to/img/lantern-hours-xl.jpg\", \"large\": \"https://reanime.to/img/lantern-hours-l.jpg\", \"medium\": null}, \"description\": \"<p>A <i>synopsis</i>.<br>Second line.</p>\", \"status\": \"FINISHED\", \"genres\": [\"Drama\", \"Slice of Life\"], \"anilist_id\": null, \"subbed\": 12, \"dubbed\": 8, \"seasonYear\": 2024, \"episodes\": 12}"
+    },
+    {
+      "key": "GET https://reanime.to/api/v1/anime/unaired-show #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://reanime.to/api/v1/anime/unaired-show",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": "{\"anime_id\": \"unaired-show\", \"title\": {\"romaji\": \"Lantern Hours\", \"english\": \"Lantern Hours\", \"native\": \"\\u30e9\\u30f3\\u30bf\\u30f3\"}, \"cover_image\": {\"extraLarge\": \"https://reanime.to/img/lantern-hours-xl.jpg\", \"large\": \"https://reanime.to/img/lantern-hours-l.jpg\", \"medium\": null}, \"description\": \"<p>A <i>synopsis</i>.<br>Second line.</p>\", \"status\": \"FINISHED\", \"genres\": [\"Drama\", \"Slice of Life\"], \"anilist_id\": 12345, \"subbed\": 0, \"dubbed\": 0, \"seasonYear\": 2024, \"episodes\": 12}"
+    },
+    {
+      "key": "GET https://reanime.to/api/v1/anime/unaired-show/episodes?limit=2000 #e3b0c44298fc",
+      "method": "GET",
+      "url": "https://reanime.to/api/v1/anime/unaired-show/episodes?limit=2000",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": "{\"data\": []}"
+    }
+  ]
+}
