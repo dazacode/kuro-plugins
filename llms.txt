@@ -1,0 +1,78 @@
+# kuro-plugins
+
+> The plugin platform for kuro: the SDK a plugin imports, the `kuro` CLI, and the
+> plugins themselves. A plugin teaches kuro about a content source it did not know
+> about. The plugin supplies data; the host supplies experience.
+
+A plugin is one ES module with a default export answering three methods:
+`searchCatalog(query, page, ctx, cursor?)`, `listEpisodes(sourceMediaId, ctx)` and
+`resolve(sourceMediaId, episode, ctx)`. It has no ambient capabilities — no `fetch`,
+no DOM, no filesystem, no timers held across calls. Everything it can do arrives as
+`ctx`, and every hostname it reaches must be declared in `plugin.json` under
+`network.hosts` or the request throws before a packet leaves.
+
+Four rules the design turns on, and none of them are style preferences:
+
+1. **You never send a request.** `ctx.http` does, only to declared hosts.
+2. **You never draw UI.** You declare `settings` as data; the host renders them on
+   all six platforms.
+3. **You never touch a segment.** When a stream is not playable as served you
+   *describe* the repair as ops and the host executes it natively — because one
+   bundle runs on three JS engines and passing hundreds of multi-megabyte buffers
+   across an FFI boundary is ruinous on a phone and invisible on a laptop.
+4. **Missing data is an event, not a value.** Throw `NotFoundError` or
+   `SourceChangedError`. An empty list makes a broken plugin look exactly like a
+   show with no episodes, which is the failure this project exists to eliminate.
+
+Development never involves the app — no Flutter, no simulator, no device. Tests
+record real traffic once into committed cassettes and replay them offline in about
+a hundred milliseconds, so a source changing becomes a failing test with a diff
+rather than a black screen reported weeks later.
+
+## Writing a plugin
+
+- [Documentation index](docs/README.md): four paths, by what you are doing.
+- [Your first plugin](docs/first-plugin.md): `kuro new` to a signed `.kuroplugin`, including the cassette idiom that `save()` depends on.
+- [The manifest](docs/manifest.md): every field, why `network.hosts` is enforced rather than advisory, and how to prove a setting is actually read.
+- [The three methods](docs/three-methods.md): signatures, `CatalogPage.hasMore`, the error vocabulary, `PlaybackSource`, and the declarative byte pipeline.
+- [When it goes wrong](docs/troubleshooting.md): the real error strings and what each means.
+- [Porting an existing extension](docs/porting.md): for people arriving with an extension rather than an empty directory.
+- [Plugin repositories](docs/repository.md): `index.json`, signing, installing, updates, trust.
+
+## Read the reference plugin
+
+[`plugins/example/src/index.ts`](plugins/example/src/index.ts) talks to a fictional
+API shaped like the awkward real ones — cursor-ish pagination, a separate call for
+servers, config wedged into a `<script>` tag as not-quite-JSON, and a CDN that
+disguises its segments. It is fully offline and commented as it goes.
+[`plugins/example/test/example.spec.ts`](plugins/example/test/example.spec.ts) is the
+suite shape to copy, including the test most people skip: executing the declared
+pipeline against a recorded segment.
+
+[`plugins/mysource/`](plugins/mysource/) is a real port against a real source.
+
+## The CLI
+
+```
+kuro new <name>                 scaffold
+kuro test <plugin> [--record]   replay the tapes; --record refreshes them
+kuro validate <plugin>          check the manifest and layout
+kuro bundle <plugin>            build the single ES module the host loads
+kuro package <plugin> [--key]   write a deterministic .kuroplugin
+kuro verify <archive> [--key]   check integrity, and signature if a key is given
+kuro index --base-url <url>     write dist/index.json for a repository
+kuro keygen                     make an Ed25519 signing key pair
+```
+
+## Layout
+
+- `packages/kuro-plugin-sdk/` — what a plugin imports: types, `ctx`, extraction helpers, pipeline ops, the test harness.
+- `packages/kuro-plugin-tools/` — the `kuro` CLI. A developer dependency; never reaches a device.
+- `schema/`, `fixtures/` — copies of kuro's `contract/`, with a spec that alarms when a copy goes stale.
+
+## Related
+
+The compatibility layer that adapts plugins written for *other* ecosystems into this
+same ABI is a separate repository:
+[dazacode/plugin-bridge-js](https://github.com/dazacode/plugin-bridge-js), Apache-2.0.
+Nothing in it is a prerequisite for writing a plugin here.

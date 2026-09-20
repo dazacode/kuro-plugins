@@ -306,14 +306,29 @@ function cmdNew(): void {
 	writeFileSync(join(directory, 'licenses', 'LICENSE'), 'TODO: add the plugin licence text.\n');
 	writeFileSync(
 		join(directory, 'test', `${name}.spec.ts`),
-		`import { describe, expect, it } from 'vitest';\n\n` +
+		`import { afterAll, describe, expect, it } from 'vitest';\n\n` +
 			`import { pluginTest } from '@kuro/plugin-sdk/testing';\n\n` +
 			`import plugin from '../src/index';\n\n` +
 			`const ROOT = new URL('..', import.meta.url).pathname;\n\n` +
+			`/*\n` +
+			` * One harness per tape, created once at module scope.\n` +
+			` *\n` +
+			` * The instance your tests use is the one holding the recorded traffic, so\n` +
+			` * it is the one save() has to be called on. Build a fresh harness inside\n` +
+			` * afterAll and you will write an empty tape over a good one — and a tape\n` +
+			` * with no entries fails replay with the same message as no tape at all.\n` +
+			` */\n` +
+			`const search = pluginTest(ROOT, 'search');\n\n` +
+			`// A no-op unless --record. Without it, recording makes the requests and\n` +
+			`// writes nothing, and the next run tells you to record.\n` +
+			`afterAll(() => {\n\tsearch.save();\n});\n\n` +
 			`describe('${name}', () => {\n` +
 			`\tit('declares the id it exports', () => {\n` +
-			`\t\tconst { manifest } = pluginTest(ROOT, 'search');\n` +
-			`\t\texpect(plugin.id).toBe(manifest.id);\n` +
+			`\t\texpect(plugin.id).toBe(search.manifest.id);\n` +
+			`\t});\n\n` +
+			`\tit('searches', async () => {\n` +
+			`\t\tconst page = await plugin.searchCatalog('some show', 1, search.ctx);\n` +
+			`\t\texpect(page.entries.length).toBeGreaterThan(0);\n` +
 			`\t});\n});\n`
 	);
 

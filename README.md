@@ -153,13 +153,18 @@ regardless of who signed what.
 
 ## Where things are specified
 
-| Question                          | File                                  |
-| --------------------------------- | ------------------------------------- |
-| Why any of this                   | `kuro/docs/ADR-0002-plugin-system.md` |
-| What a plugin is, normatively     | `kuro/contract/plugin-api/ABI.md`     |
-| Manifest fields                   | `schema/kuro-plugin.schema.json`      |
-| Byte-op semantics                 | `fixtures/stream_pipeline.json`       |
-| How to port an existing extension | `docs/porting.md`                     |
+| Question                          | File                                                 |
+| --------------------------------- | ---------------------------------------------------- |
+| I want to write one               | [`docs/first-plugin.md`](docs/first-plugin.md)       |
+| Manifest fields, in prose         | [`docs/manifest.md`](docs/manifest.md)               |
+| The three methods                 | [`docs/three-methods.md`](docs/three-methods.md)     |
+| Something is broken               | [`docs/troubleshooting.md`](docs/troubleshooting.md) |
+| How to port an existing extension | [`docs/porting.md`](docs/porting.md)                 |
+| Publishing for others to install  | [`docs/repository.md`](docs/repository.md)           |
+| Why any of this                   | `kuro/docs/ADR-0002-plugin-system.md`                |
+| What a plugin is, normatively     | `kuro/contract/plugin-api/ABI.md`                    |
+| Manifest fields, normatively      | `schema/kuro-plugin.schema.json`                     |
+| Byte-op semantics                 | `fixtures/stream_pipeline.json`                      |
 
 `schema/` and `fixtures/` are copies of kuro's `contract/`. They have to be —
 the two repositories are independent by design — and
