@@ -36,7 +36,7 @@ rather than a black screen reported weeks later.
 ## Writing a plugin
 
 - [Documentation index](docs/README.md): four paths, by what you are doing.
-- [Your first plugin](docs/first-plugin.md): `kuro new` to a signed `.kuroplugin`, including the cassette idiom that `save()` depends on.
+- [Your first plugin](docs/first-plugin.md): `kuro new` to a signed `.yorozoplugin`, including the cassette idiom that `save()` depends on.
 - [The manifest](docs/manifest.md): every field, why `network.hosts` is enforced rather than advisory, and how to prove a setting is actually read.
 - [The three methods](docs/three-methods.md): signatures, `CatalogPage.hasMore`, the error vocabulary, `PlaybackSource`, and the declarative byte pipeline.
 - [When it goes wrong](docs/troubleshooting.md): the real error strings and what each means.
@@ -60,7 +60,7 @@ kuro new <name>                 scaffold
 kuro test <plugin> [--record]   replay the tapes; --record refreshes them
 kuro validate <plugin>          check the manifest and layout
 kuro bundle <plugin>            build the single ES module the host loads
-kuro package <plugin> [--key]   write a deterministic .kuroplugin
+kuro package <plugin> [--key]   write a deterministic .yorozoplugin
 kuro verify <archive> [--key]   check integrity, and signature if a key is given
 kuro index --base-url <url>     write dist/index.json for a repository
 kuro keygen                     make an Ed25519 signing key pair

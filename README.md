@@ -19,6 +19,42 @@ not, so the two differ on purpose.
 repository and the client still builds. That is what makes the client's rule 9
 structural rather than a promise.
 
+## If you are an AI agent
+
+**Read [`llms.txt`](llms.txt) before writing anything.** It is this repository
+condensed for you: the three methods with their real signatures, the four rules
+the design turns on, the CLI, and every doc worth opening. This section is the
+part that does not fit there — the things that compile, run, and are wrong.
+
+The loop is `kuro new <name>` → edit → `kuro test <name> --record` → `kuro test
+<name>` → `kuro validate <name>` → `kuro package <name>`. The second `test` runs
+offline from committed cassettes in about a hundred milliseconds, and it is the
+only evidence that counts. Do not reason about whether a plugin works; run it.
+
+Six things are easy to get wrong in a way that looks right:
+
+- **`matchOne(pattern, text, what, url)`** — pattern first, and it wants the URL
+  so its failure can say which page disappointed it. Guessing the order gives you
+  a `RegExp` where a string belongs and a confusing throw.
+- **A setting is keyed `id`, not `key`**, and a boolean is `type: "switch"`.
+  `plugins/example/plugin.json` is the copy worth imitating.
+- **`CatalogPage.hasMore` is required** and comes from the source. Do not infer
+  it from `entries.length`; the type's own comment says why.
+- **`save()` must be called on the harness the tests used.** Build it once at
+  module scope and save _that_ in `afterAll`. A fresh `pluginTest(...)` inside
+  `afterAll` writes an empty tape over a good one, and an empty tape fails replay
+  with the same message as a missing one.
+- **Throw `NotFoundError`, never return `[]`.** An empty list makes a broken
+  plugin indistinguishable from a show with no episodes.
+- **Every hostname goes in `network.hosts`** or `ctx.http` throws before a packet
+  leaves. There is no ambient `fetch`, no DOM, no `document`. Parse HTML with a
+  regex or bundle a parser.
+
+When you are unsure what a host does with what you return, read
+[dazacode/plugin-bridge-js](https://github.com/dazacode/plugin-bridge-js): the
+sandbox, the host port and the conformance run are all there, and it is the
+reference implementation of the contract this repository targets.
+
 ## Already have a plugin for something else?
 
 You may not have to rewrite it. [dazacode/plugin-bridge-js](https://github.com/dazacode/plugin-bridge-js)
