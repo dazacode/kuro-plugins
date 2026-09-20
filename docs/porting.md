@@ -1,8 +1,16 @@
 # Porting an existing extension
 
-A recipe for turning an Aniyomi/Tachiyomi-style Kotlin extension into a kuro
-plugin. `plugins/example` is a worked example of every step; read it alongside
-this.
+A recipe for turning an Aniyomi/Tachiyomi-style Kotlin extension into a Yorozo
+plugin **by hand**. `plugins/example` is a worked example of every step; read it
+alongside this.
+
+> **Try translating it first.**
+> [dazacode/plugin-bridge-js](https://github.com/dazacode/plugin-bridge-js) does
+> this conversion statically, for Aniyomi and five other ecosystems, with no
+> Android runtime and no bytecode interpreter. `plugin-bridge check <dir|url>`
+> translates an extension, runs it, and says what stopped it. Port by hand when
+> that refuses something you need — and the refusal will name the construct,
+> which is a much better starting point than an empty file.
 
 The claim this document is making: **most of a Kotlin extension is not logic.**
 It is an HTTP client, an interceptor stack, an Android preferences screen, DTO

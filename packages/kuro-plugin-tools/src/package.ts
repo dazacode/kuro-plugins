@@ -1,7 +1,7 @@
 /**
  * Bundling, packaging and verification.
  *
- * A `.kuroplugin` is a **deterministic** ZIP carrying the built bundle, its
+ * A `.yorozoplugin` is a **deterministic** ZIP carrying the built bundle, its
  * manifest byte-for-byte as written, a per-file hash manifest and a detached
  * signature. Packaging the same checkout twice produces identical bytes: entry
  * order is sorted, timestamps are fixed, and no field reads a clock. That is
@@ -79,7 +79,7 @@ export async function bundlePlugin(directory: string): Promise<string> {
 }
 
 /**
- * Validates, bundles and writes `<entrypoint>-<version>.kuroplugin`.
+ * Validates, bundles and writes `<entrypoint>-<version>.yorozoplugin`.
  *
  * Validation runs first and there is no `--force`. A flag to package a plugin
  * that fails its own rules is a flag that will be used, and the rules exist
@@ -166,7 +166,7 @@ export async function packagePlugin(
 	mkdirSync(outputDirectory, { recursive: true });
 	const archivePath = join(
 		outputDirectory,
-		`${manifest.entrypoint}-${manifest.version}.kuroplugin`
+		`${manifest.entrypoint}-${manifest.version}.yorozoplugin`
 	);
 	writeFileSync(archivePath, buildZip(files));
 

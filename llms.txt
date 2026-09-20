@@ -1,8 +1,12 @@
 # kuro-plugins
 
-> The plugin platform for kuro: the SDK a plugin imports, the `kuro` CLI, and the
-> plugins themselves. A plugin teaches kuro about a content source it did not know
-> about. The plugin supplies data; the host supplies experience.
+> The plugin platform for Yorozo (dazacode/yorozo-client): the SDK a plugin imports,
+> the `kuro` CLI, and the plugins themselves. A plugin teaches Yorozo about a content
+> source it did not know about. The plugin supplies data; the host supplies experience.
+>
+> `kuro` is the identifier everywhere — the CLI, `@kuro/plugin-sdk`, the
+> `app.kuro.plugins.*` namespace. Yorozo is the product a viewer sees, so a packaged
+> plugin is a `.yorozoplugin`, which is what the client's installer accepts.
 
 A plugin is one ES module with a default export answering three methods:
 `searchCatalog(query, page, ctx, cursor?)`, `listEpisodes(sourceMediaId, ctx)` and
@@ -68,9 +72,22 @@ kuro keygen                     make an Ed25519 signing key pair
 - `packages/kuro-plugin-tools/` — the `kuro` CLI. A developer dependency; never reaches a device.
 - `schema/`, `fixtures/` — copies of kuro's `contract/`, with a spec that alarms when a copy goes stale.
 
-## Related
+## If you already have a plugin for another ecosystem
 
-The compatibility layer that adapts plugins written for *other* ecosystems into this
-same ABI is a separate repository:
-[dazacode/plugin-bridge-js](https://github.com/dazacode/plugin-bridge-js), Apache-2.0.
-Nothing in it is a prerequisite for writing a plugin here.
+[dazacode/plugin-bridge-js](https://github.com/dazacode/plugin-bridge-js) (Apache-2.0)
+translates extensions written for Aniyomi, Stremio, Sora, Hayase, Mangayomi and Nuvio
+into this same ABI, statically — no Android runtime, no bytecode interpreter.
+`plugin-bridge check <dir|url>` translates one, runs it, and names what stopped it.
+A translated plugin and one written here are the same artifact by the time a client
+sees them, so this is worth trying before porting by hand.
+
+It is also the reference implementation of the ABI — the sandbox, the host port, the
+packager and the five-step conformance run — and therefore where to look when you need
+to know exactly what a host does with what you return. Nothing in it is a prerequisite
+for writing a plugin here.
+
+## The client
+
+[dazacode/yorozo-client](https://github.com/dazacode/yorozo-client) is the host: it
+installs `.yorozoplugin` archives, renders the settings a manifest declares, executes
+the byte pipeline a `resolve` describes, and ships no sources of its own.

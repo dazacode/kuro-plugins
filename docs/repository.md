@@ -12,7 +12,7 @@ with **zero** repositories configured, and a user adds every one themselves.
 
 |                | What it is                                   | When                                              |
 | -------------- | -------------------------------------------- | ------------------------------------------------- |
-| **Sideload**   | A `.kuroplugin` file the user opens          | Developing, or a plugin nobody publishes          |
+| **Sideload**   | A `.yorozoplugin` file the user opens        | Developing, or a plugin nobody publishes          |
 | **Repository** | A URL the user adds, holding an `index.json` | Everything else, and the only one that can update |
 
 Both end in the same verification and the same consent screen. A repository is
@@ -47,7 +47,7 @@ difference between a client and a distributor.
 			"permissions": ["network", "storage"],
 			"hosts": ["api.example.com", "*.cdn.example.com"],
 			"language": "en",
-			"download": "https://…/example-1.0.0.kuroplugin",
+			"download": "https://…/example-1.0.0.yorozoplugin",
 			"sha256": "9f2c8a1d…",
 			"size": 41231
 		}

@@ -1,6 +1,6 @@
 # Your first plugin
 
-From nothing to a signed, installable `.kuroplugin`. If you already have an
+From nothing to a signed, installable `.yorozoplugin`. If you already have an
 extension to port, read [porting.md](porting.md) instead — it starts from what
 you have rather than from an empty directory.
 
@@ -222,7 +222,7 @@ and [The one idea](../README.md#the-one-idea) is why.
 bun run kuro validate mysource
 bun run kuro keygen                       # once
 bun run kuro package mysource --key .keys/signing-key.pem
-bun run kuro verify plugins/mysource/*.kuroplugin --key .keys/signing-key.pub
+bun run kuro verify plugins/mysource/*.yorozoplugin --key .keys/signing-key.pub
 ```
 
 To publish a set of plugins for others to install, see

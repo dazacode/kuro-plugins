@@ -10,7 +10,7 @@
  * kuro test <plugin> --record     hit the real source, rewrite the tapes
  * kuro validate <plugin>          manifest and layout rules
  * kuro bundle <plugin>            build the single ES module the host loads
- * kuro package <plugin>           the signed, deterministic .kuroplugin
+ * kuro package <plugin>           the signed, deterministic .yorozoplugin
  * kuro verify <archive>           check integrity and signature
  * kuro new <name>                 scaffold
  * ```
@@ -90,7 +90,7 @@ function usage(): never {
 			'  test <plugin> [--record]   run the plugin suite; --record refreshes cassettes',
 			'  validate <plugin>          check the manifest and layout',
 			'  bundle <plugin> [--out d]  build the single ES module the host loads',
-			'  package <plugin> [--key f] write a deterministic .kuroplugin',
+			'  package <plugin> [--key f] write a deterministic .yorozoplugin',
 			'  verify <archive> [--key f] check integrity, and signature if a key is given',
 			'  index --base-url <url>     write dist/index.json for a repository',
 			'  keygen [--out dir]         make an Ed25519 signing key pair',

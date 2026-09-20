@@ -15,6 +15,18 @@ It is the reference plugin: a fictional API shaped like the awkward real ones,
 fully offline, and commented as it goes. Most questions these pages answer are
 answered there first, in context.
 
+## You may not have to write one
+
+[dazacode/plugin-bridge-js](https://github.com/dazacode/plugin-bridge-js)
+translates extensions written for Aniyomi, Stremio, Sora, Hayase, Mangayomi and
+Nuvio into this same ABI, statically. If you already have a working extension
+for one of those, try that before porting by hand — a translated plugin and one
+written here are the same artifact by the time the client sees them.
+
+It is also where the ABI is specified and implemented: the sandbox, the host
+port, the packager, the conformance run. Worth reading when you need to know
+precisely what a host does with what you return.
+
 ## What a plugin is
 
 One ES module with a default export answering three questions:

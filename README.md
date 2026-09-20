@@ -1,16 +1,37 @@
 # kuro-plugins
 
-The plugin platform for [kuro](https://github.com/dazacode/kuro): the SDK, the
-tooling, and the plugins themselves.
+The plugin platform for **Yorozo** — [dazacode/yorozo-client](https://github.com/dazacode/yorozo-client) —
+the SDK, the tooling, and the plugins themselves.
 
-A plugin teaches kuro about a content source it did not know about. It answers
+A plugin teaches Yorozo about a content source it did not know about. It answers
 three questions — _what shows do you have?_, _what episodes?_, _how do I play
-one?_ — and kuro renders the answers with the same screens it uses for
+one?_ — and the client renders the answers with the same screens it uses for
 everything else. The plugin supplies **data**; the host supplies **experience**.
 
-**kuro ships no sources and depends on no plugin.** Delete this entire
+`kuro` is the identifier, everywhere: the CLI, `@kuro/plugin-sdk`, the
+`app.kuro.plugins.*` namespace, `kuroPluginApi`. Yorozo is what a viewer sees,
+which is why a packaged plugin is a **`.yorozoplugin`** — that is the extension
+the client's installer accepts and its file picker offers. Renaming identifiers
+would move stored user data; renaming the thing a viewer double-clicks would
+not, so the two differ on purpose.
+
+**Yorozo ships no sources and depends on no plugin.** Delete this entire
 repository and the client still builds. That is what makes the client's rule 9
 structural rather than a promise.
+
+## Already have a plugin for something else?
+
+You may not have to rewrite it. [dazacode/plugin-bridge-js](https://github.com/dazacode/plugin-bridge-js)
+(Apache-2.0) translates extensions written for six other ecosystems — Aniyomi,
+Stremio, Sora, Hayase, Mangayomi, Nuvio — into this same ABI, statically, with
+no Android runtime and no bytecode interpreter. A translated plugin and one
+written here are the same artifact by the time the client sees them.
+
+It is also the reference implementation of the ABI: the sandbox, the host port,
+the packager and the conformance run all live there, so it is where to look when
+you want to know exactly what a host does with what you return.
+
+You do not need it to write a plugin. [Start here](docs/first-plugin.md) instead.
 
 ```bash
 bun install
@@ -129,7 +150,7 @@ workflow we already have.
 
 ## Distribution
 
-A `.kuroplugin` is a deterministic ZIP: `plugin.json` byte-identical to source,
+A `.yorozoplugin` is a deterministic ZIP: `plugin.json` byte-identical to source,
 `integrity.json` (SHA-256 per file plus a canonical digest), `signature.json`
 (detached Ed25519, present even when unsigned), `payload/`, `licenses/`.
 

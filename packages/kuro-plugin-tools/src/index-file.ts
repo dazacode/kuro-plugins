@@ -75,11 +75,14 @@ export function buildIndex(options: BuildIndexOptions): RepositoryIndex {
 	}
 
 	const archives = readdirSync(options.distDirectory)
-		.filter((file) => file.endsWith('.kuroplugin'))
+		// `.kuroplugin` is still read, because a repository published before the
+		// extension settled should not lose its archives over a rename. Nothing
+		// writes one any more.
+		.filter((file) => file.endsWith('.yorozoplugin') || file.endsWith('.kuroplugin'))
 		.sort();
 
 	if (archives.length === 0) {
-		throw new Error(`No .kuroplugin archives in ${options.distDirectory}.`);
+		throw new Error(`No .yorozoplugin archives in ${options.distDirectory}.`);
 	}
 
 	// Newest version per plugin id. A repository serving two versions of one
