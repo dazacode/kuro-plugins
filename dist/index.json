@@ -1,0 +1,25 @@
+{
+	"schemaVersion": 1,
+	"name": "kuro plugins",
+	"updatedAt": "2026-09-20",
+	"plugins": [
+		{
+			"id": "app.kuro.plugins.example",
+			"name": "Example",
+			"description": "A complete, fully offline reference plugin. It talks to an API that does not exist, so it is deterministic forever and demonstrates every part of the ABI without naming a real source.",
+			"version": "1.0.0",
+			"author": "kuro",
+			"license": "Apache-2.0",
+			"kuroPluginApi": 1,
+			"minimumKuroVersion": "0.1.0",
+			"platforms": ["android", "ios", "macos", "windows", "linux", "web"],
+			"capabilities": ["search", "episodes", "resolve", "browse"],
+			"permissions": ["network", "storage"],
+			"hosts": ["api.example.com", "*.cdn.example.com"],
+			"language": "en",
+			"download": "https://raw.githubusercontent.com/dazacode/kuro-plugins/master/example-1.0.0.kuroplugin",
+			"sha256": "bd4d18efd07ea741e7eedf3d2d2288beac343fd5c309ee90fbc5c9d28b65842c",
+			"size": 9702
+		}
+	]
+}

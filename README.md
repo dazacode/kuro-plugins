@@ -15,8 +15,8 @@ structural rather than a promise.
 ```bash
 bun install
 bun run kuro test example        # offline, ~100ms
-bun run kuro validate mysource
-bun run kuro package mysource
+bun run kuro validate example
+bun run kuro package example
 ```
 
 `bun` only — never `npm`, `npx`, `yarn` or `pnpm`.
@@ -29,7 +29,6 @@ bun run kuro package mysource
 packages/kuro-plugin-sdk/     what a plugin imports. Types, ops, test harness.
 packages/kuro-plugin-tools/   the `kuro` CLI. Reusable by anyone.
 plugins/example/              the reference. Fully offline. Read this first.
-plugins/mysource/              a real port, and the proof the design works.
 schema/                       the published manifest schema
 fixtures/                     the cross-language pipeline vectors
 ```

@@ -2,3 +2,11 @@ node_modules/
 *.tsbuildinfo
 .DS_Store
 .keys/
+
+# Plugins that name real sources live in a private repository and are developed
+# here by symlink. Ignored so one cannot be committed back into a public index
+# by accident — the manifest of such a plugin is a machine-readable list of the
+# hosts it talks to, which is exactly right inside the product and a liability
+# in a public repository.
+/plugins/*
+!/plugins/example/

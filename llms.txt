@@ -49,8 +49,6 @@ disguises its segments. It is fully offline and commented as it goes.
 suite shape to copy, including the test most people skip: executing the declared
 pipeline against a recorded segment.
 
-[`plugins/mysource/`](plugins/mysource/) is a real port against a real source.
-
 ## The CLI
 
 ```

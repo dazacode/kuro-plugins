@@ -16,6 +16,13 @@
       "name": "@kuro/plugin-sdk",
       "version": "0.1.0",
     },
+    "packages/kuro-plugin-tools": {
+      "name": "@kuro/plugin-tools",
+      "version": "0.1.0",
+      "bin": {
+        "kuro": "./src/cli.ts",
+      },
+    },
     "plugins/example": {
       "name": "@kuro-plugins/example",
       "version": "1.0.0",
@@ -30,6 +37,8 @@
     "@kuro-plugins/example": ["@kuro-plugins/example@workspace:plugins/example"],
 
     "@kuro/plugin-sdk": ["@kuro/plugin-sdk@workspace:packages/kuro-plugin-sdk"],
+
+    "@kuro/plugin-tools": ["@kuro/plugin-tools@workspace:packages/kuro-plugin-tools"],
 
     "@oxc-project/types": ["@oxc-project/types@0.148.0", "", {}, "sha512-Nm4s/jB+4FpFsPhWGEC4h7rzksesmtnMXomo6rCMcg/b8zLQuOziRgkCS1fxDCXOlJB/6Q8oABOZ/OP6RIPj9A=="],
 

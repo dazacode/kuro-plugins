@@ -1,7 +1,7 @@
 # Porting an existing extension
 
 A recipe for turning an Aniyomi/Tachiyomi-style Kotlin extension into a kuro
-plugin. `plugins/mysource` is a worked example of every step; read it alongside
+plugin. `plugins/example` is a worked example of every step; read it alongside
 this.
 
 The claim this document is making: **most of a Kotlin extension is not logic.**
